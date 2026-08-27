@@ -43,3 +43,26 @@ When you're ready for a real installable app:
 - WhatsApp/SMS booking confirmations
 - UPI payment tracking, daily/monthly reports
 - Changeable staff PIN and club settings screen
+
+## Project handoff & sync (for Claude Code)
+
+This repo is the **single source of truth**. It was scaffolded and v1 was built in a Claude Cowork cloud session on 2026-08-27, then transferred here (`C:\Users\akash\IdeaProjects\kakul-club`). The cloud copy is retired — all code changes happen in this repo from now on.
+
+**Division of labor**
+- **Claude chat / Cowork (project "Kakul Snooker & Pool Club")**: specs, feature planning, research, design, status doc. It learns current state by checking out this repo.
+- **Claude Code (VS Code)**: implementation and review, working directly on this repo. Update `progress.md` and this section as part of finishing any task.
+
+**Current state (v1, 2026-08-27)**
+- Expo SDK 57 / React Native 0.86 / TypeScript. No navigation lib — custom tab bar in `App.tsx`. State in `src/store.tsx` (React context + AsyncStorage, key `kakul-club-state-v1`). No backend yet.
+- Screens in `src/screens/`: Dashboard, Tables (session timer + ₹/hr billing), Booking (1-hr slots, double-booking prevention), Members (visits + 10 pts per ₹100 auto-credit on billing), Tournaments (knockout brackets with byes).
+- Staff mode gated by PIN `1234` (stored in state as `staffPin`); customer view is the default.
+- Verified: `npx tsc --noEmit` clean; `npx expo export --platform ios` succeeds.
+
+**Assumptions to confirm with Akash (placeholders)**
+- 3 snooker tables @ ₹200/hr, 2 pool @ ₹150/hr, open 10 AM–11 PM (`defaultState()` in `src/store.tsx`).
+
+**Pending / next**
+- Push to GitHub (git history is intact in this repo; remote not yet configured).
+- Confirm real club details and update defaults.
+- v2: shared backend (Supabase/Firebase), WhatsApp/SMS confirmations, UPI/payment reports, changeable staff PIN, settings screen.
+- Create `spec.md` and `progress.md` matching Akash's standard format from his other app repos.
