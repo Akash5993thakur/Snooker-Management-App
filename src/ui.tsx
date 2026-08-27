@@ -1,6 +1,8 @@
 import React from 'react';
 import {
+  KeyboardAvoidingView,
   Modal,
+  Platform,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -109,18 +111,23 @@ export const Sheet = ({ visible, onClose, title, children }: {
   children: React.ReactNode;
 }) => (
   <Modal visible={visible} transparent animationType="slide" onRequestClose={onClose}>
-    <Pressable style={st.backdrop} onPress={onClose} />
-    <View style={st.sheet}>
-      <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 12 }}>
-        <Text style={[st.title, { flex: 1, fontSize: 20 }]}>{title}</Text>
-        <Pressable onPress={onClose} hitSlop={10}>
-          <Text style={{ color: C.textDim, fontSize: 22 }}>✕</Text>
-        </Pressable>
+    <KeyboardAvoidingView
+      style={{ flex: 1, justifyContent: 'flex-end' }}
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+    >
+      <Pressable style={st.backdrop} onPress={onClose} />
+      <View style={st.sheet}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 12 }}>
+          <Text style={[st.title, { flex: 1, fontSize: 20 }]}>{title}</Text>
+          <Pressable onPress={onClose} hitSlop={10}>
+            <Text style={{ color: C.textDim, fontSize: 22 }}>✕</Text>
+          </Pressable>
+        </View>
+        <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={{ paddingBottom: 24 }}>
+          {children}
+        </ScrollView>
       </View>
-      <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={{ paddingBottom: 24 }}>
-        {children}
-      </ScrollView>
-    </View>
+    </KeyboardAvoidingView>
   </Modal>
 );
 

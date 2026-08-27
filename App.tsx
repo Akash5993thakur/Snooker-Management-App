@@ -80,7 +80,15 @@ function Main() {
 
       <Sheet visible={pinOpen} onClose={() => setPinOpen(false)} title="Staff login">
         <Label>Enter staff PIN</Label>
-        <Input value={pin} onChangeText={setPin} keyboardType="number-pad" secureTextEntry placeholder="PIN" />
+        <Input
+          value={pin}
+          onChangeText={setPin}
+          keyboardType="number-pad"
+          secureTextEntry
+          placeholder="PIN"
+          returnKeyType="done"
+          onSubmitEditing={submitPin}
+        />
         <Btn label="Unlock staff mode" onPress={submitPin} />
       </Sheet>
     </View>

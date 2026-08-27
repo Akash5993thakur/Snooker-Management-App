@@ -3,6 +3,9 @@
 # dependencies
 node_modules/
 
+# local scratch, not part of the project
+_to_delete/
+
 # Expo
 .expo/
 dist/

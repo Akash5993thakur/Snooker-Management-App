@@ -52,8 +52,8 @@ This repo is the **single source of truth**. It was scaffolded and v1 was built 
 - **Claude chat / Cowork (project "Kakul Snooker & Pool Club")**: specs, feature planning, research, design, status doc. It learns current state by checking out this repo.
 - **Claude Code (VS Code)**: implementation and review, working directly on this repo. Update `progress.md` and this section as part of finishing any task.
 
-**Current state (v1, 2026-08-27)**
-- Expo SDK 57 / React Native 0.86 / TypeScript. No navigation lib — custom tab bar in `App.tsx`. State in `src/store.tsx` (React context + AsyncStorage, key `kakul-club-state-v1`). No backend yet.
+**Current state (v1, 2026-08-28)**
+- Expo SDK 54 / React Native 0.81 / TypeScript (downgraded from SDK 57 on 2026-08-28 so the app runs in the Expo Go version installed on Akash's phone). No navigation lib — custom tab bar in `App.tsx`. State in `src/store.tsx` (React context + AsyncStorage, key `kakul-club-state-v1`). No backend yet.
 - Screens in `src/screens/`: Dashboard, Tables (session timer + ₹/hr billing), Booking (1-hr slots, double-booking prevention), Members (visits + 10 pts per ₹100 auto-credit on billing), Tournaments (knockout brackets with byes).
 - Staff mode gated by PIN `1234` (stored in state as `staffPin`); customer view is the default.
 - Verified: `npx tsc --noEmit` clean; `npx expo export --platform ios` succeeds.
@@ -65,4 +65,4 @@ This repo is the **single source of truth**. It was scaffolded and v1 was built 
 - Push to GitHub (git history is intact in this repo; remote not yet configured).
 - Confirm real club details and update defaults.
 - v2: shared backend (Supabase/Firebase), WhatsApp/SMS confirmations, UPI/payment reports, changeable staff PIN, settings screen.
-- Create `spec.md` and `progress.md` matching Akash's standard format from his other app repos.
+- Repo structure now matches Akash's standard (added 2026-08-27): `.claude/agents/` (spec-writer, implementer, reviewer), `.claude/memory/` (MEMORY.md index + context/behaviour/decisions/rates), `.claude/specs/` (phase specs; phase-0 baseline COMPLETE, phase-1 design implementation BLOCKED on Claude Design hand-back, phase-2 club config DRAFT). Start any task by reading `.claude/memory/MEMORY.md`.
