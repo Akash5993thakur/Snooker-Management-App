@@ -10,7 +10,7 @@ Kakul Snooker & Pool Club is a snooker & pool club in Akash's home town (India).
 
 **Tech Stack:** Expo SDK 54 / React Native 0.81 / TypeScript (downgraded from SDK 57 on 2026-08-28 to match the Expo Go on Akash's phone). No backend yet — all data on-device in AsyncStorage (key `kakul-club-state-v1`). Repo: C:\Users\akash\IdeaProjects\kakul-club (not yet on GitHub).
 
-**Current Stage:** v1 functional (built 2026-08-27). Phase-1 visual redesign ("Felt & Brass") implemented 2026-08-28 per `.claude/specs/phase-1-design-implementation.md` — pending Akash's review before it counts as done. `npx tsc --noEmit` and `npx expo export --platform ios` both pass on the redesigned code.
+**Current Stage:** v1 functional (built 2026-08-27). Phase-1 visual redesign ("Felt & Brass") implemented 2026-08-28 (commit c368617) and verified by the reviewer agent the same day: PHASE READY, 0 failures, 5 advisory notes (recorded in the spec). `npx tsc --noEmit` and `npx expo export --platform ios` both pass. Remaining before phase close: Akash's on-device check in Expo Go (header/notch clearance and zero-radius feel were the two flagged on-device risks).
 
 **Key Files:**
 - App.tsx — root, custom tab bar (5 tabs), staff PIN gate

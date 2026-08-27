@@ -1,4 +1,4 @@
-Status: READY — §4 implementation steps written by spec-writer 2026-08-28, mapped onto current file/component/function names in src/; awaiting Akash's approval of the steps before the implementer agent starts
+Status: PHASE READY — implemented in commit c368617 and verified by reviewer agent 2026-08-28: all 10 §8 checklist items PASS, all 5 exit criteria PASS (tsc + expo export re-run independently), functional scope provably unchanged (store.tsx/types.ts diff empty), 15/16 mockups matched (members-customer.png is the known duplicate, open item 5). 5 advisory notes, none blocking — see review notes below §6. Awaiting Akash's on-device check in Expo Go.
 
 # Phase 1 — Visual Redesign Implementation
 
@@ -166,6 +166,13 @@ Build every table unit, member row, tournament card, bracket, and slot rail **in
 
 ## 6. Rollback
 - Single revert of the phase's commits restores v1 visuals; no data/state impact.
+
+## Review notes (reviewer agent, 2026-08-28 — advisory, none blocking)
+1. FREE-table "Start" button renders 48pt (default primary Btn) vs tokens §5.6's stated 44pt — clears the ≥44pt minimum; spec-internal inconsistency (§5.6 vs §5.8), not a defect.
+2. Day-picker third label renders "FRI" (weekday only) vs mockup's "FRI 30" — implementer followed spec step 37 verbatim; the step itself diverged from the mockup.
+3. Booking-confirmed sheet omits the mockup's "Arrive five minutes early; the table is held for ten." sentence — no §5.x section governs this sheet.
+4. Tourney "+ New" header ghost button lacks the add-outline icon that "+ Table"/"+ Member" carry — cosmetic consistency only, unspec'd.
+5. Two literal `borderRadius: 0` in ui.tsx (enforce zero radius) — compliant, noted for grep hygiene.
 
 ## Open items from the design hand-back (none blocking)
 1. Zero radius — CONFIRMED by Akash 2026-08-27 (see memory/design_decisions.md).
