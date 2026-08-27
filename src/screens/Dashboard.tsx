@@ -1,14 +1,25 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { C } from '../theme';
-import { Card, Empty, Row, Screen } from '../ui';
+import { Text, View } from 'react-native';
+import { C, S, T } from '../theme';
+import { Empty, ListRow, Screen, StatTile } from '../ui';
 import { fmtHour, fmtMoney, todayISO, useStore } from '../store';
 
-const Stat = ({ label, value, accent }: { label: string; value: string; accent?: string }) => (
-  <Card style={{ flex: 1, marginBottom: 0 }}>
-    <Text style={{ color: accent || C.green, fontSize: 22, fontWeight: '800' }}>{value}</Text>
-    <Text style={{ color: C.textDim, fontSize: 12, marginTop: 4 }}>{label}</Text>
-  </Card>
+const SectionHeader = ({ title, count }: { title: string; count?: string }) => (
+  <View
+    style={{
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      paddingVertical: 13,
+      paddingHorizontal: S.s5,
+      borderTopWidth: S.rule,
+      borderTopColor: C.rule,
+      marginTop: S.s6,
+    }}
+  >
+    <Text style={[T.label, { color: C.ink }]}>{title}</Text>
+    {count ? <Text style={[T.bodySm, { color: C.inkFaint }]}>{count}</Text> : null}
+  </View>
 );
 
 export default function Dashboard() {
@@ -16,79 +27,83 @@ export default function Dashboard() {
   const today = todayISO();
 
   const activeTables = state.tables.filter((t) => t.sessionStart != null);
-  const todaySales = state.sales.filter((s) => new Date(s.endedAt).toDateString() === new Date().toDateString());
+  const todaySales = state.sales.filter(
+    (s) => new Date(s.endedAt).toDateString() === new Date().toDateString()
+  );
   const todayEarnings = todaySales.reduce((a, s) => a + s.amount, 0);
   const todayBookings = state.bookings
     .filter((b) => b.dateISO === today)
     .sort((a, b) => a.hour - b.hour);
   const upcomingTournaments = state.tournaments.filter((t) => t.status !== 'finished');
 
-  return (
-    <Screen title={state.clubName} subtitle={`Open ${fmtHour(state.openHour)} – ${fmtHour(state.closeHour)} · Today ${today}`}>
-      <Row style={{ marginBottom: 12 }}>
-        <Stat label="Tables in play" value={`${activeTables.length}/${state.tables.length}`} />
-        <Stat label="Bookings today" value={`${todayBookings.length}`} accent={C.blue} />
-      </Row>
-      {staffMode && (
-        <Row style={{ marginBottom: 12 }}>
-          <Stat label="Earnings today" value={fmtMoney(todayEarnings)} accent={C.gold} />
-          <Stat label="Members" value={`${state.members.length}`} accent={C.text} />
-        </Row>
-      )}
+  const weekday = new Date()
+    .toLocaleDateString('en-US', { weekday: 'short', day: 'numeric', month: 'short' })
+    .replace(',', '');
 
-      <Text style={st.section}>Today's bookings</Text>
+  return (
+    <Screen
+      title="Kakul"
+      subtitle={`OPEN ${fmtHour(state.openHour)} – ${fmtHour(state.closeHour)} · ${weekday}`}
+    >
+      <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+        <StatTile
+          label="In play"
+          value={`${activeTables.length}/${state.tables.length}`}
+          tone={activeTables.length > 0 ? 'live' : 'ink'}
+        />
+        <StatTile label="Bookings today" value={`${todayBookings.length}`} tone="ink" />
+        {staffMode && (
+          <>
+            <StatTile label="Earnings today" value={fmtMoney(todayEarnings)} tone="brass" />
+            <StatTile label="Members" value={`${state.members.length}`} tone="ink" />
+          </>
+        )}
+      </View>
+
+      <SectionHeader title="Today's bookings" count={`${todayBookings.length} today`} />
       {todayBookings.length === 0 ? (
-        <Empty text="No bookings yet today. Book a table from the Book tab." />
+        <View style={{ paddingHorizontal: S.s5, paddingTop: S.s4 }}>
+          <Empty heading="NO BOOKINGS YET" body="Slots open from 10 AM. Book one from the Book tab." />
+        </View>
       ) : (
         todayBookings.map((b) => {
           const table = state.tables.find((t) => t.id === b.tableId);
-          return (
-            <Card key={b.id}>
-              <Row>
-                <Text style={{ color: C.gold, fontWeight: '800', width: 64 }}>{fmtHour(b.hour)}</Text>
-                <View style={{ flex: 1 }}>
-                  <Text style={{ color: C.text, fontWeight: '700' }}>{b.customerName}</Text>
-                  <Text style={{ color: C.textDim, fontSize: 12 }}>{table?.name ?? 'Table'}</Text>
-                </View>
-              </Row>
-            </Card>
-          );
+          return <ListRow key={b.id} leading={fmtHour(b.hour)} title={b.customerName} meta={table?.name} />;
         })
       )}
 
-      <Text style={st.section}>Tournaments</Text>
+      <SectionHeader title="Tournaments" />
       {upcomingTournaments.length === 0 ? (
-        <Empty text="No tournament coming up. Create one in the Tourney tab." />
+        <View style={{ paddingHorizontal: S.s5, paddingTop: S.s4 }}>
+          <Empty heading="NO TOURNAMENTS" body="Staff can add one from this screen." />
+        </View>
       ) : (
         upcomingTournaments.map((t) => (
-          <Card key={t.id}>
-            <Text style={{ color: C.text, fontWeight: '700' }}>{t.name}</Text>
-            <Text style={{ color: C.textDim, fontSize: 12, marginTop: 2 }}>
-              {t.dateISO} · {t.players.length} players · entry {fmtMoney(t.entryFee)} ·{' '}
-              {t.status === 'signup' ? 'sign-ups open' : 'in progress'}
-            </Text>
-          </Card>
+          <ListRow
+            key={t.id}
+            title={t.name}
+            meta={`${t.dateISO} · ${t.players.length} PLAYERS · ${fmtMoney(t.entryFee)} · ${
+              t.status === 'signup' ? 'SIGN-UPS OPEN' : 'LIVE'
+            }`}
+          />
         ))
       )}
 
       {staffMode && (
         <>
-          <Text style={st.section}>Recent billing</Text>
+          <SectionHeader title="Recent billing" />
           {todaySales.length === 0 ? (
-            <Empty text="No sessions billed yet today." />
+            <View style={{ paddingHorizontal: S.s5, paddingTop: S.s4 }}>
+              <Empty heading="NOTHING BILLED TODAY" body="Sessions you stop will show up here." />
+            </View>
           ) : (
             todaySales.slice(0, 6).map((s) => (
-              <Card key={s.id}>
-                <Row>
-                  <View style={{ flex: 1 }}>
-                    <Text style={{ color: C.text, fontWeight: '700' }}>{s.customer}</Text>
-                    <Text style={{ color: C.textDim, fontSize: 12 }}>
-                      {s.tableName} · {s.minutes} min
-                    </Text>
-                  </View>
-                  <Text style={{ color: C.gold, fontWeight: '800' }}>{fmtMoney(s.amount)}</Text>
-                </Row>
-              </Card>
+              <ListRow
+                key={s.id}
+                title={s.customer}
+                meta={`${s.tableName} · ${s.minutes} MIN`}
+                trailing={<Text style={[T.monoMd, { color: C.brass }]}>{fmtMoney(s.amount)}</Text>}
+              />
             ))
           )}
         </>
@@ -96,15 +111,3 @@ export default function Dashboard() {
     </Screen>
   );
 }
-
-const st = StyleSheet.create({
-  section: {
-    color: C.textDim,
-    fontWeight: '800',
-    fontSize: 13,
-    textTransform: 'uppercase',
-    letterSpacing: 1,
-    marginTop: 14,
-    marginBottom: 8,
-  },
-});

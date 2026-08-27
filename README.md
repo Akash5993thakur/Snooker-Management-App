@@ -52,17 +52,22 @@ This repo is the **single source of truth**. It was scaffolded and v1 was built 
 - **Claude chat / Cowork (project "Kakul Snooker & Pool Club")**: specs, feature planning, research, design, status doc. It learns current state by checking out this repo.
 - **Claude Code (VS Code)**: implementation and review, working directly on this repo. Update `progress.md` and this section as part of finishing any task.
 
-**Current state (v1, 2026-08-28)**
+**Current state (phase-1 "Felt & Brass" redesign, 2026-08-28)**
 - Expo SDK 54 / React Native 0.81 / TypeScript (downgraded from SDK 57 on 2026-08-28 so the app runs in the Expo Go version installed on Akash's phone). No navigation lib — custom tab bar in `App.tsx`. State in `src/store.tsx` (React context + AsyncStorage, key `kakul-club-state-v1`). No backend yet.
-- Screens in `src/screens/`: Dashboard, Tables (session timer + ₹/hr billing), Booking (1-hr slots, double-booking prevention), Members (visits + 10 pts per ₹100 auto-credit on billing), Tournaments (knockout brackets with byes).
-- Staff mode gated by PIN `1234` (stored in state as `staffPin`); customer view is the default.
+- Visual system implemented per `.claude/specs/phase-1-design-implementation.md`: dark felt ground, zero corner radius, brass (`#E3A93B`) as the single accent, red reserved for IN PLAY/Cancel, Archivo for text + JetBrains Mono for all numerals (timers, money, points, phone numbers, PIN). Tokens live in `src/theme.ts` (`C`, `S`, `T`); shared components in `src/ui.tsx` (`Screen`, `Btn`, `Chip`, `SegmentedControl`, `StaffControl`, `Sheet`, `Input`, `Badge`, `Empty`, `StatTile`, `ListRow`).
+- New deps: `expo-font`, `@expo-google-fonts/archivo`, `@expo-google-fonts/jetbrains-mono`, and `@expo/vector-icons` (added as a direct dependency — it ships nested inside `expo`'s own `node_modules` and wasn't resolvable from the project root without installing it directly; see `expo-font` plugin added to `app.json`).
+- The floating staff pill is gone; staff PIN entry + STAFF/STAFF ON now live in the header on every screen (`StaffControl`), PIN `1234` still works, wrong PIN just clears the field silently (no alert).
+- The Tables screen's re-render tick moved from 15s to 1s so the elapsed timer/running bill visibly tick every second — the only sanctioned behavior change; billing math (`stopSession` in `store.tsx`) is untouched.
+- The stop-session and booking-confirmed system alerts are now bottom sheets (Bill summary, Booking confirmed); other validation alerts (empty name, slot taken, etc.) are unchanged native alerts.
+- Screens in `src/screens/`: Dashboard, Tables (session timer + ₹/hr billing), Booking (1-hr slots, double-booking prevention, 84×84pt slot rail), Members (visits + 10 pts per ₹100 auto-credit on billing), Tournaments (knockout brackets with byes, Rounds/Bracket views).
 - Verified: `npx tsc --noEmit` clean; `npx expo export --platform ios` succeeds.
 
 **Assumptions to confirm with Akash (placeholders)**
 - 3 snooker tables @ ₹200/hr, 2 pool @ ₹150/hr, open 10 AM–11 PM (`defaultState()` in `src/store.tsx`).
 
 **Pending / next**
+- Akash's review of the phase-1 redesign (visual QA against `design/mockups/*.png`, especially on a real notched iPhone — see the header safe-area note in the implementation spec §C).
 - Push to GitHub (git history is intact in this repo; remote not yet configured).
 - Confirm real club details and update defaults.
 - v2: shared backend (Supabase/Firebase), WhatsApp/SMS confirmations, UPI/payment reports, changeable staff PIN, settings screen.
-- Repo structure now matches Akash's standard (added 2026-08-27): `.claude/agents/` (spec-writer, implementer, reviewer), `.claude/memory/` (MEMORY.md index + context/behaviour/decisions/rates), `.claude/specs/` (phase specs; phase-0 baseline COMPLETE, phase-1 design implementation BLOCKED on Claude Design hand-back, phase-2 club config DRAFT). Start any task by reading `.claude/memory/MEMORY.md`.
+- Repo structure now matches Akash's standard (added 2026-08-27): `.claude/agents/` (spec-writer, implementer, reviewer), `.claude/memory/` (MEMORY.md index + context/behaviour/decisions/rates), `.claude/specs/` (phase specs; phase-0 baseline COMPLETE, phase-1 design implementation IMPLEMENTED pending review, phase-2 club config DRAFT). Start any task by reading `.claude/memory/MEMORY.md`.

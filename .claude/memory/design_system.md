@@ -38,7 +38,14 @@ Both via `expo-font` (`@expo-google-fonts/archivo`, `@expo-google-fonts/jetbrain
 
 ## Things that changed structurally
 
-- The floating staff pill is gone; the staff control now lives in the header on every screen and shows a STAFF ON state.
-- The 13-chip slot grid is now an 84 × 84 pt horizontal rail with explicit FREE / SELECTED / TAKEN states.
-- The stop-session system alert is now a proper bill-summary bottom sheet, on the same sheet pattern every form uses.
-- Empty states are dashed-rule boxes with fixed copy (spec §5.15).
+**STATUS: IMPLEMENTED (phase-1, 2026-08-28)** — the items below now match shipped code in `src/theme.ts`, `src/ui.tsx`, `App.tsx`, and `src/screens/*`, per `.claude/specs/phase-1-design-implementation.md`.
+
+- The floating staff pill is gone; the staff control now lives in the header on every screen (`StaffControl` in `src/ui.tsx`, rendered by `Screen`) and shows a STAFF ON state.
+- The 13-chip slot grid is now an 84 × 84 pt horizontal rail with explicit FREE / SELECTED / TAKEN states (`Booking.tsx`).
+- The stop-session system alert is now a proper bill-summary bottom sheet, on the same sheet pattern every form uses (`Tables.tsx`).
+- The booking-confirmed alert is now a bottom sheet with a felt banner (`Booking.tsx`).
+- Empty states are dashed-rule boxes with fixed copy (spec §5.15), via the `Empty` component.
+- The wrong-PIN alert is gone; the PIN sheet silently clears the field on a mismatch (`StaffControl`).
+- The v1 `✕` sheet-close glyph is gone; sheets close via a `chevron-down-outline` Ionicon.
+
+**Behavior-adjacent detail:** the Tables screen's re-render tick interval moved from 15s to 1s (`Tables.tsx`), so the elapsed timer and running bill visibly tick every second, matching §5.7 ("Timer and bill both tick every second"). This is the one sanctioned behavioral change in phase 1 — it only affects render frequency; `stopSession` in `store.tsx` still computes `minutes`/`amount` from real elapsed `Date.now()` at stop time, unchanged.

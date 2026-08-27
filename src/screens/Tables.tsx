@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, Text, View } from 'react-native';
-import { C } from '../theme';
-import { Btn, Card, Chip, Input, Label, Row, Screen, Sheet } from '../ui';
+import { Text, View } from 'react-native';
+import { Badge, Btn, Chip, Input, Label, Row, Screen, SegmentedControl, Sheet } from '../ui';
+import { C, S, T } from '../theme';
 import { fmtDuration, fmtMoney, useStore } from '../store';
-import { ClubTable } from '../types';
+import { ClubTable, SaleRecord } from '../types';
 
 export default function Tables() {
   const { state, staffMode, startSession, stopSession, setTableRate, addTable } = useStore();
@@ -17,9 +17,10 @@ export default function Tables() {
   const [newName, setNewName] = useState('');
   const [newType, setNewType] = useState<'snooker' | 'pool'>('snooker');
   const [newRate, setNewRate] = useState('200');
+  const [billSale, setBillSale] = useState<SaleRecord | null>(null);
 
   useEffect(() => {
-    const iv = setInterval(() => setTick((t) => t + 1), 15000);
+    const iv = setInterval(() => setTick((t) => t + 1), 1000);
     return () => clearInterval(iv);
   }, []);
 
@@ -37,12 +38,7 @@ export default function Tables() {
 
   const doStop = (t: ClubTable) => {
     const sale = stopSession(t.id);
-    if (sale) {
-      Alert.alert(
-        'Session ended',
-        `${t.name} — ${sale.customer}\nTime: ${sale.minutes} min\nBill: ${fmtMoney(sale.amount)}`
-      );
-    }
+    if (sale) setBillSale(sale);
   };
 
   const saveRate = () => {
@@ -60,61 +56,120 @@ export default function Tables() {
     }
   };
 
+  const activeTables = state.tables.filter((t) => t.sessionStart != null);
+  const sortedTables = [...state.tables].sort(
+    (a, b) => (b.sessionStart != null ? 1 : 0) - (a.sessionStart != null ? 1 : 0)
+  );
+  const billRate = billSale ? state.tables.find((x) => x.id === billSale.tableId)?.hourlyRate ?? 0 : 0;
+
   return (
     <Screen
       title="Tables"
-      subtitle={staffMode ? 'Tap a table to start or stop a session' : 'Live table availability'}
-      right={staffMode ? <Btn label="+ Table" small kind="ghost" onPress={() => setAddOpen(true)} /> : undefined}
+      subtitle={`${activeTables.length} OF ${state.tables.length} IN PLAY`}
+      headerAction={
+        staffMode ? (
+          <Btn kind="ghost" icon="add-outline" label="Table" onPress={() => setAddOpen(true)} />
+        ) : undefined
+      }
     >
-      {state.tables.map((t) => {
+      {sortedTables.map((t) => {
         const busy = t.sessionStart != null;
         const elapsed = busy ? Date.now() - (t.sessionStart as number) : 0;
         const runningBill = busy ? (elapsed / 3600000) * t.hourlyRate : 0;
-        return (
-          <Card key={t.id} style={{ borderColor: busy ? C.gold : C.border }}>
-            <Row>
-              <View style={{ flex: 1 }}>
-                <Text style={{ color: C.text, fontSize: 17, fontWeight: '800' }}>{t.name}</Text>
-                <Text style={{ color: C.textDim, fontSize: 12, marginTop: 2 }}>
-                  {t.type === 'snooker' ? 'Snooker' : 'Pool'} · {fmtMoney(t.hourlyRate)}/hr
-                </Text>
-                {busy && (
-                  <Text style={{ color: C.gold, fontSize: 13, marginTop: 6, fontWeight: '700' }}>
-                    {t.sessionCustomer} · {fmtDuration(elapsed)}
-                    {staffMode ? ` · ~${fmtMoney(runningBill)}` : ''}
+        const typeLabel = t.type === 'snooker' ? 'Snooker' : 'Pool';
+
+        if (!busy) {
+          return (
+            <View
+              key={t.id}
+              style={{
+                paddingVertical: 16,
+                paddingHorizontal: S.s5,
+                borderBottomWidth: S.rule,
+                borderBottomColor: C.rule,
+                backgroundColor: C.ground,
+              }}
+            >
+              <Row style={{ alignItems: 'flex-start' }}>
+                <View style={{ flex: 1, minWidth: 0 }}>
+                  <Text style={[T.h3, { color: C.ink }]}>{t.name}</Text>
+                  <Text style={[T.micro, { color: C.inkFaint, marginTop: 3 }]}>
+                    {typeLabel} · {fmtMoney(t.hourlyRate)}/HR
                   </Text>
+                </View>
+                <Badge kind="free" label="FREE" />
+              </Row>
+              {staffMode && (
+                <Row style={{ marginTop: 12 }}>
+                  <Btn kind="primary" label="Start" style={{ flex: 1 }} onPress={() => openStart(t)} />
+                  <Btn
+                    kind="secondary"
+                    label="Rate"
+                    onPress={() => {
+                      setRateFor(t);
+                      setRateText(String(t.hourlyRate));
+                    }}
+                  />
+                </Row>
+              )}
+            </View>
+          );
+        }
+
+        return (
+          <View key={t.id} style={{ backgroundColor: C.surface2 }}>
+            <View style={{ height: S.ruleAccent, backgroundColor: C.live }} />
+            <View style={{ paddingTop: 16, paddingBottom: 18, paddingHorizontal: S.s5, gap: 14 }}>
+              <Row style={{ alignItems: 'flex-start' }}>
+                <View style={{ flex: 1, minWidth: 0 }}>
+                  <Text style={[T.h2, { color: C.ink }]}>{t.name}</Text>
+                  <Text style={[T.micro, { color: C.inkFaint, marginTop: 3 }]}>
+                    {typeLabel} · {fmtMoney(t.hourlyRate)}/HR
+                  </Text>
+                </View>
+                <Badge kind="inPlay" label="IN PLAY" />
+              </Row>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  borderTopWidth: S.rule,
+                  borderTopColor: C.rule,
+                  paddingTop: 14,
+                }}
+              >
+                <View style={{ flex: 1 }}>
+                  <Text style={[T.micro, { color: C.inkFaint }]}>ELAPSED</Text>
+                  <Text style={[T.monoXl, { color: C.ink, marginTop: 2 }]}>{fmtDuration(elapsed)}</Text>
+                  <Text style={{ ...T.body, fontSize: 14, color: C.inkDim, marginTop: 4 }}>
+                    {t.sessionCustomer}
+                  </Text>
+                </View>
+                {staffMode && (
+                  <View style={{ alignItems: 'flex-end' }}>
+                    <Text style={[T.micro, { color: C.inkFaint }]}>RUNNING BILL</Text>
+                    <Text style={[T.monoXl, { color: C.brass, marginTop: 2 }]}>{fmtMoney(runningBill)}</Text>
+                  </View>
                 )}
               </View>
-              <View style={{ alignItems: 'flex-end', gap: 8 }}>
-                <Text style={{ color: busy ? C.gold : C.green, fontWeight: '800', fontSize: 13 }}>
-                  {busy ? '● IN PLAY' : '● FREE'}
-                </Text>
-                {staffMode &&
-                  (busy ? (
-                    <Btn label="Stop & bill" small kind="danger" onPress={() => doStop(t)} />
-                  ) : (
-                    <Row>
-                      <Btn label="Rate" small kind="ghost" onPress={() => { setRateFor(t); setRateText(String(t.hourlyRate)); }} />
-                      <Btn label="Start" small onPress={() => openStart(t)} />
-                    </Row>
-                  ))}
-              </View>
-            </Row>
-          </Card>
+              {staffMode && <Btn kind="primary" label="Stop & bill" onPress={() => doStop(t)} />}
+            </View>
+          </View>
         );
       })}
 
-      <Sheet visible={startFor != null} onClose={() => setStartFor(null)} title={`Start ${startFor?.name ?? ''}`}>
-        <Label>Customer name (optional)</Label>
-        <Input value={customer} onChangeText={setCustomer} placeholder="Walk-in" />
+      <Sheet visible={startFor != null} onClose={() => setStartFor(null)} title="START SESSION">
+        <View>
+          <Label>Customer</Label>
+          <Input value={customer} onChangeText={setCustomer} placeholder="Walk-in" />
+        </View>
         {state.members.length > 0 && (
-          <>
-            <Label>Or pick a member</Label>
-            <Row style={{ marginBottom: 12 }}>
+          <View>
+            <Label>Members</Label>
+            <Row>
               {state.members.slice(0, 12).map((m) => (
                 <Chip
                   key={m.id}
-                  label={m.name}
+                  label={m.name.split(' ')[0]}
                   active={memberId === m.id}
                   onPress={() => {
                     setMemberId(memberId === m.id ? null : m.id);
@@ -123,28 +178,111 @@ export default function Tables() {
                 />
               ))}
             </Row>
+          </View>
+        )}
+        {startFor && (
+          <Row
+            style={{
+              justifyContent: 'space-between',
+              borderTopWidth: S.rule,
+              borderTopColor: C.rule,
+              paddingTop: 13,
+            }}
+          >
+            <Text style={[T.micro, { color: C.inkFaint }]}>
+              {startFor.name} · {startFor.type === 'snooker' ? 'SNOOKER' : 'POOL'}
+            </Text>
+            <Text style={[T.monoMd, { color: C.brass }]}>{fmtMoney(startFor.hourlyRate)}/HR</Text>
+          </Row>
+        )}
+        <Btn kind="primary" size="sheet" label="Start session" onPress={confirmStart} />
+      </Sheet>
+
+      <Sheet visible={rateFor != null} onClose={() => setRateFor(null)} title="EDIT RATE">
+        <View>
+          <Label>Hourly rate (₹)</Label>
+          <Input value={rateText} onChangeText={setRateText} keyboardType="number-pad" mono />
+        </View>
+        <Btn kind="primary" size="sheet" label="Save rate" onPress={saveRate} />
+      </Sheet>
+
+      <Sheet visible={addOpen} onClose={() => setAddOpen(false)} title="ADD TABLE">
+        <View>
+          <Label>Table name</Label>
+          <Input value={newName} onChangeText={setNewName} placeholder="e.g. Snooker 4" />
+        </View>
+        <View>
+          <Label>Hourly rate (₹)</Label>
+          <Input value={newRate} onChangeText={setNewRate} keyboardType="number-pad" mono />
+        </View>
+        <View>
+          <Label>Type</Label>
+          <SegmentedControl
+            options={[
+              { label: 'Snooker', value: 'snooker' as const },
+              { label: 'Pool', value: 'pool' as const },
+            ]}
+            value={newType}
+            onChange={setNewType}
+          />
+        </View>
+        <Btn kind="primary" size="sheet" label="Add table" onPress={saveNewTable} />
+      </Sheet>
+
+      <Sheet visible={billSale != null} onClose={() => setBillSale(null)} title="BILL SUMMARY">
+        {billSale && (
+          <>
+            <Row
+              style={{
+                justifyContent: 'space-between',
+                paddingVertical: 13,
+                borderBottomWidth: S.rule,
+                borderBottomColor: C.rule,
+              }}
+            >
+              <Text style={[T.micro, { color: C.inkFaint }]}>TABLE</Text>
+              <Text style={[T.monoMd, { color: C.ink }]}>{billSale.tableName}</Text>
+            </Row>
+            <Row
+              style={{
+                justifyContent: 'space-between',
+                paddingVertical: 13,
+                borderBottomWidth: S.rule,
+                borderBottomColor: C.rule,
+              }}
+            >
+              <Text style={[T.micro, { color: C.inkFaint }]}>CUSTOMER</Text>
+              <Text style={[T.monoMd, { color: C.ink }]}>{billSale.customer}</Text>
+            </Row>
+            <Row
+              style={{
+                justifyContent: 'space-between',
+                paddingVertical: 13,
+                borderBottomWidth: S.rule,
+                borderBottomColor: C.rule,
+              }}
+            >
+              <Text style={[T.micro, { color: C.inkFaint }]}>MINUTES</Text>
+              <Text style={[T.monoMd, { color: C.ink }]}>{billSale.minutes}</Text>
+            </Row>
+            <Row
+              style={{
+                justifyContent: 'space-between',
+                paddingVertical: 13,
+                borderBottomWidth: S.rule,
+                borderBottomColor: C.rule,
+              }}
+            >
+              <Text style={[T.micro, { color: C.inkFaint }]}>RATE</Text>
+              <Text style={[T.monoMd, { color: C.ink }]}>{fmtMoney(billRate)}/hr</Text>
+            </Row>
+            <Row style={{ justifyContent: 'space-between', alignItems: 'flex-end', paddingTop: 20, paddingBottom: 22 }}>
+              <Text style={{ ...T.label, fontSize: 12, color: C.ink }}>TOTAL</Text>
+              <Text style={[T.monoDisplay, { color: C.brass }]}>{fmtMoney(billSale.amount)}</Text>
+            </Row>
+            <Btn kind="primary" size="sheet" label="Mark paid" onPress={() => setBillSale(null)} />
           </>
         )}
-        <Btn label="Start session" onPress={confirmStart} />
-      </Sheet>
-
-      <Sheet visible={rateFor != null} onClose={() => setRateFor(null)} title={`Rate for ${rateFor?.name ?? ''}`}>
-        <Label>Hourly rate (₹)</Label>
-        <Input value={rateText} onChangeText={setRateText} keyboardType="number-pad" />
-        <Btn label="Save rate" onPress={saveRate} />
-      </Sheet>
-
-      <Sheet visible={addOpen} onClose={() => setAddOpen(false)} title="Add a table">
-        <Label>Name</Label>
-        <Input value={newName} onChangeText={setNewName} placeholder="e.g. Snooker 4" />
-        <Label>Type</Label>
-        <Row style={{ marginBottom: 10 }}>
-          <Chip label="Snooker" active={newType === 'snooker'} onPress={() => setNewType('snooker')} />
-          <Chip label="Pool" active={newType === 'pool'} onPress={() => setNewType('pool')} />
-        </Row>
-        <Label>Hourly rate (₹)</Label>
-        <Input value={newRate} onChangeText={setNewRate} keyboardType="number-pad" />
-        <Btn label="Add table" onPress={saveNewTable} />
       </Sheet>
     </Screen>
   );
