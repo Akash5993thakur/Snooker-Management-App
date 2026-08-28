@@ -55,7 +55,7 @@ function Main() {
   if (!state.currentUser) {
     return (
       <View style={st.root}>
-        <StatusBar style="light" />
+        <StatusBar style="dark" />
         <Login />
       </View>
     );
@@ -63,7 +63,7 @@ function Main() {
 
   return (
     <View style={st.root}>
-      <StatusBar style="light" />
+      <StatusBar style="dark" />
 
       <View style={{ flex: 1 }}>
         {tab === 'home' && <Dashboard />}

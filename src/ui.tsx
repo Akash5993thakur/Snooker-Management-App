@@ -52,9 +52,10 @@ const BTN_HEIGHT: Record<BtnKind, number> = {
   ghost: 36,
 };
 const BTN_LABEL_SIZE: Record<BtnKind, number> = { primary: 13, secondary: 12, danger: 11, ghost: 11 };
+// light theme: all button labels blue except destructive (red)
 const BTN_LABEL_COLOR: Record<BtnKind, string> = {
-  primary: C.brassInk,
-  secondary: C.inkDim,
+  primary: C.brass,
+  secondary: C.brass,
   danger: C.live,
   ghost: C.brass,
 };
@@ -78,7 +79,7 @@ export const Btn = ({ label, onPress, kind = 'primary', size = 'default', disabl
       style={({ pressed }) => [
         st.btn,
         { height },
-        kind === 'primary' && { backgroundColor: C.brass },
+        kind === 'primary' && { backgroundColor: C.accentSoft },
         kind === 'secondary' && { backgroundColor: 'transparent', borderWidth: S.rule, borderColor: C.rule },
         kind === 'danger' && { backgroundColor: 'transparent', borderWidth: S.rule, borderColor: C.live },
         kind === 'ghost' && { backgroundColor: 'transparent', borderWidth: S.rule, borderColor: C.brass },

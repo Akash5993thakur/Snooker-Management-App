@@ -1,22 +1,26 @@
 import { TextStyle } from 'react-native';
 
+// Light theme (owner-directed 2026-08-28): white ground, blue accent.
+// Token NAMES kept from the Felt & Brass spec so components stay untouched;
+// `brass` is now the blue accent, `accentSoft` is the primary-button fill.
 export const C = {
-  ground: '#0B120F',
-  surface: '#111C17',
-  surface2: '#17251E',
-  rule: '#24382E',
-  ruleFaint: '#1A2721',
-  ink: '#F1F5F2',
-  inkDim: '#93A89C',
-  inkFaint: '#62786C',
-  inkMute: '#3E5247',
-  brass: '#E3A93B',
-  brassInk: '#0B120F',
-  live: '#EC3013',
+  ground: '#FFFFFF',
+  surface: '#F5F7F9',
+  surface2: '#EDF1F4',
+  rule: '#D9DEE3',
+  ruleFaint: '#E9EDF0',
+  ink: '#15181B',
+  inkDim: '#4E5A64',
+  inkFaint: '#7C8790',
+  inkMute: '#AEB7BE',
+  brass: '#1558D6',
+  brassInk: '#FFFFFF',
+  accentSoft: '#E7EEFB',
+  live: '#D7301F',
   liveInk: '#FFFFFF',
   felt: '#1E7A4C',
-  feltText: '#4FBF87',
-  scrim: 'rgba(4, 9, 7, 0.72)',
+  feltText: '#177347',
+  scrim: 'rgba(9, 14, 20, 0.45)',
 } as const;
 
 export const S = {

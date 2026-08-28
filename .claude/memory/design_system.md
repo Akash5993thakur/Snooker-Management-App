@@ -1,5 +1,7 @@
 # Design System — Felt & Brass
 
+> **PALETTE OVERRIDDEN 2026-08-28 (Akash, demo feedback):** the app now runs a LIGHT theme — white ground, dark ink, blue accent `#1558D6` (token still named `brass`), soft-blue primary-button fill (`accentSoft`), blue button labels (danger stays red), status bar dark. Structure, type scale, spacing, zero radius, and all component specs below are unchanged; only the color VALUES in `src/theme.ts` differ from the palette table in this file and the tokens spec. If the dark Felt & Brass palette is ever wanted back, it's a one-file revert of `theme.ts` + the two `StatusBar` styles + the `Btn` primary fill/label lines.
+
 **Full spec:** [`.claude/specs/phase-1-design-tokens.md`](../specs/phase-1-design-tokens.md) — tokens, every component spec, icon names, all measurements in points. Build from that file; this is only the summary.
 
 ## Direction and why
