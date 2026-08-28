@@ -62,18 +62,25 @@ export default function Booking() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dateISO, tableId]);
 
+  const me = state.currentUser;
+
+  // customers only ever see their own bookings (matched by phone); staff sees all
   const upcoming = state.bookings
     .filter((b) => b.dateISO >= todayISO())
+    .filter((b) => staffMode || (!!me?.phone && b.phone === me.phone))
     .sort((a, b) => (a.dateISO === b.dateISO ? a.hour - b.hour : a.dateISO < b.dateISO ? -1 : 1));
 
   const selectedTable = state.tables.find((t) => t.id === tableId);
 
   const book = () => {
+    // customers book under their logged-in identity; staff types details to book on behalf of a customer
+    const bookedName = staffMode ? name.trim() : me?.name ?? '';
+    const bookedPhone = staffMode ? phone.trim() : me?.phone ?? '';
     if (hour == null) return Alert.alert('Pick a time slot');
-    if (!name.trim()) return Alert.alert('Please enter your name');
-    const err = addBooking({ tableId, dateISO, hour, customerName: name.trim(), phone: phone.trim() });
+    if (!bookedName) return Alert.alert('Please enter your name');
+    const err = addBooking({ tableId, dateISO, hour, customerName: bookedName, phone: bookedPhone });
     if (err) return Alert.alert('Slot taken', err);
-    setConfirmed({ table: selectedTable?.name ?? '', dateISO, hour, name: name.trim() });
+    setConfirmed({ table: selectedTable?.name ?? '', dateISO, hour, name: bookedName });
     setHour(null);
     setName('');
     setPhone('');
@@ -161,14 +168,22 @@ export default function Booking() {
       </View>
 
       <View style={{ paddingHorizontal: S.s5, gap: S.s6, marginTop: S.s6 }}>
-        <View>
-          <Label>Your name</Label>
-          <Input value={name} onChangeText={setName} placeholder="Name" />
-        </View>
-        <View>
-          <Label>Phone</Label>
-          <Input value={phone} onChangeText={setPhone} placeholder="10-digit number" keyboardType="phone-pad" mono />
-        </View>
+        {staffMode ? (
+          <>
+            <View>
+              <Label>Customer name</Label>
+              <Input value={name} onChangeText={setName} placeholder="Name" />
+            </View>
+            <View>
+              <Label>Phone</Label>
+              <Input value={phone} onChangeText={setPhone} placeholder="10-digit number" keyboardType="phone-pad" mono />
+            </View>
+          </>
+        ) : (
+          <Text style={[T.micro, { color: C.inkFaint }]}>
+            BOOKING AS {me?.name?.toUpperCase() ?? ''} · {me?.phone ?? ''}
+          </Text>
+        )}
         <Btn kind="primary" label={confirmLabel} onPress={book} />
       </View>
 

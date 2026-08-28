@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 import { C, S, T } from '../theme';
-import { Empty, ListRow, Screen, StatTile } from '../ui';
+import { Btn, Empty, ListRow, Screen, StatTile } from '../ui';
 import { fmtHour, fmtMoney, todayISO, useStore } from '../store';
 
 const SectionHeader = ({ title, count }: { title: string; count?: string }) => (
@@ -23,16 +23,19 @@ const SectionHeader = ({ title, count }: { title: string; count?: string }) => (
 );
 
 export default function Dashboard() {
-  const { state, staffMode } = useStore();
+  const { state, staffMode, logout } = useStore();
   const today = todayISO();
+  const me = state.currentUser;
 
   const activeTables = state.tables.filter((t) => t.sessionStart != null);
   const todaySales = state.sales.filter(
     (s) => new Date(s.endedAt).toDateString() === new Date().toDateString()
   );
   const todayEarnings = todaySales.reduce((a, s) => a + s.amount, 0);
+  // customers only ever see their own bookings (matched by phone); staff sees all
   const todayBookings = state.bookings
     .filter((b) => b.dateISO === today)
+    .filter((b) => staffMode || (!!me?.phone && b.phone === me.phone))
     .sort((a, b) => a.hour - b.hour);
   const upcomingTournaments = state.tournaments.filter((t) => t.status !== 'finished');
 
@@ -44,6 +47,7 @@ export default function Dashboard() {
     <Screen
       title="Kakul"
       subtitle={`OPEN ${fmtHour(state.openHour)} – ${fmtHour(state.closeHour)} · ${weekday}`}
+      headerAction={<Btn kind="ghost" label="Logout" onPress={logout} />}
     >
       <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
         <StatTile

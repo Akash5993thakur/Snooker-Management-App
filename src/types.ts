@@ -65,6 +65,14 @@ export interface Tournament {
   champion: string | null;
 }
 
+export type UserRole = 'customer' | 'staff';
+
+export interface UserAccount {
+  name: string;
+  phone: string; // identity key for booking visibility; '' for staff
+  role: UserRole;
+}
+
 export interface ClubState {
   tables: ClubTable[];
   bookings: Booking[];
@@ -75,4 +83,5 @@ export interface ClubState {
   openHour: number;
   closeHour: number;
   staffPin: string;
+  currentUser: UserAccount | null; // added 2026-08-28 (demo login); old saves merge to null via defaultState spread
 }

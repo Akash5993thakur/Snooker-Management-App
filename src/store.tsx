@@ -17,6 +17,7 @@ import {
   MemberPlan,
   SaleRecord,
   Tournament,
+  UserAccount,
 } from './types';
 
 const STORAGE_KEY = 'kakul-club-state-v1';
@@ -64,6 +65,7 @@ const defaultState = (): ClubState => ({
   members: [],
   sales: [],
   tournaments: [],
+  currentUser: null,
 });
 
 interface Store {
@@ -71,6 +73,9 @@ interface Store {
   loaded: boolean;
   staffMode: boolean;
   setStaffMode: (on: boolean) => void;
+  // auth (local demo login, no backend)
+  login: (user: UserAccount) => void;
+  logout: () => void;
   // tables
   startSession: (tableId: string, customer: string, memberId: string | null) => void;
   stopSession: (tableId: string) => SaleRecord | null;
@@ -128,6 +133,16 @@ export const StoreProvider = ({ children }: { children: React.ReactNode }) => {
     if (!loaded) return;
     AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(state)).catch(() => {});
   }, [state, loaded]);
+
+  const login = useCallback((user: UserAccount) => {
+    setState((s) => ({ ...s, currentUser: user }));
+    if (user.role === 'staff') setStaffMode(true);
+  }, []);
+
+  const logout = useCallback(() => {
+    setState((s) => ({ ...s, currentUser: null }));
+    setStaffMode(false);
+  }, []);
 
   const startSession = useCallback((tableId: string, customer: string, memberId: string | null) => {
     setState((s) => ({
@@ -283,6 +298,8 @@ export const StoreProvider = ({ children }: { children: React.ReactNode }) => {
       loaded,
       staffMode,
       setStaffMode,
+      login,
+      logout,
       startSession,
       stopSession,
       setTableRate,
@@ -295,7 +312,7 @@ export const StoreProvider = ({ children }: { children: React.ReactNode }) => {
       startTournament,
       recordWinner,
     }),
-    [state, loaded, staffMode, startSession, stopSession, setTableRate, addTable, addBooking, cancelBooking, addMember, addTournament, addPlayer, startTournament, recordWinner]
+    [state, loaded, staffMode, login, logout, startSession, stopSession, setTableRate, addTable, addBooking, cancelBooking, addMember, addTournament, addPlayer, startTournament, recordWinner]
   );
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;

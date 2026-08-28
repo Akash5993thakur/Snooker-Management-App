@@ -30,6 +30,12 @@ All logic lives in `src/store.tsx`.
 - Recording the last winner of a round auto-generates the next round; a 1-winner round finishes the tournament and sets champion
 - Anyone can add players during sign-up; only staff record winners
 
+**Login & booking visibility (added 2026-08-28, demo-grade, local only)**
+- App gates on a login screen (src/screens/Login.tsx) until `state.currentUser` is set: Customer path = name + 10-digit phone (no password — phone is the identity key); Staff path = PIN (sets staffMode on). Persisted in AsyncStorage with the rest of state; Logout button in the Home header clears it.
+- Customers see ONLY their own bookings (rows where `booking.phone === currentUser.phone`) on Home "Today's bookings" and Book "Upcoming bookings"; staff sees all. Slot availability (TAKEN cells) still reflects all bookings — availability without identity.
+- Customers book under their logged-in identity (no name/phone inputs); staff keeps the inputs to book on behalf of customers.
+- No backend/db — this is device-local demo auth, to be replaced by real auth in the v2 backend phase.
+
 **Staff mode**
 - Toggled via PIN sheet (state.staffPin); staffMode is session-only (not persisted)
 - Gates: start/stop sessions, rates, add table, add member, cancel booking, start bracket, record winners, earnings/billing visibility, customer phone visibility

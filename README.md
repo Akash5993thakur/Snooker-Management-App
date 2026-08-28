@@ -10,7 +10,9 @@ A mobile app for the club, built with Expo (React Native + TypeScript). Runs on 
 - **Members** — register members (Regular / Monthly Pass); visits and loyalty points (10 pts per ₹100) update automatically when a member's session is billed
 - **Tourney** — create knockout tournaments, open sign-ups, generate brackets, record winners round by round until a champion
 
-**Staff mode:** tap "Staff login" (top-right) and enter PIN `1234`. Staff mode unlocks billing, rates, member registration, cancellations, and tournament controls.
+**Login (demo, on-device):** the app opens on a sign-in screen — customers enter name + 10-digit phone (the phone identifies their bookings; no password in the demo), staff enter PIN `1234`. Customers only ever see their own bookings; staff sees everything. Logout is in the Home header.
+
+**Staff mode:** log in as Staff (or tap the STAFF control in any header) with PIN `1234`. Staff mode unlocks billing, rates, member registration, cancellations, and tournament controls.
 
 Data is saved on the device (AsyncStorage) — it survives app restarts. No server needed for v1.
 

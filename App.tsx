@@ -16,6 +16,7 @@ import { StatusBar } from 'expo-status-bar';
 import { C, S, T } from './src/theme';
 import { StoreProvider, useStore } from './src/store';
 import Dashboard from './src/screens/Dashboard';
+import Login from './src/screens/Login';
 import Tables from './src/screens/Tables';
 import Booking from './src/screens/Booking';
 import Members from './src/screens/Members';
@@ -32,7 +33,7 @@ const TABS = [
 type TabKey = (typeof TABS)[number]['key'];
 
 function Main() {
-  const { loaded } = useStore();
+  const { state, loaded } = useStore();
   const [tab, setTab] = useState<TabKey>('home');
   const [fontsLoaded] = useFonts({
     Archivo_400Regular,
@@ -47,6 +48,15 @@ function Main() {
     return (
       <View style={[st.root, { alignItems: 'center', justifyContent: 'center' }]}>
         <Text style={{ color: C.inkDim }}>Loading…</Text>
+      </View>
+    );
+  }
+
+  if (!state.currentUser) {
+    return (
+      <View style={st.root}>
+        <StatusBar style="light" />
+        <Login />
       </View>
     );
   }
