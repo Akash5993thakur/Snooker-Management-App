@@ -84,4 +84,5 @@ export interface ClubState {
   closeHour: number;
   staffPin: string;
   currentUser: UserAccount | null; // added 2026-08-28 (demo login); old saves merge to null via defaultState spread
+  promo: string; // added 2026-08-28: staff-managed promotional offer shown as a Home banner; '' = no banner
 }

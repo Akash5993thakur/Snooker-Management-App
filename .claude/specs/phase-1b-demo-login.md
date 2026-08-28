@@ -17,6 +17,10 @@ For today's demo: user-based login (end user + club staff) and booking privacy (
 - `src/screens/Dashboard.tsx`: "Today's bookings" (list + stat tile count) filtered to `booking.phone === currentUser.phone` unless staffMode; ghost **Logout** header action.
 - `src/screens/Booking.tsx`: "Upcoming bookings" filtered the same way; customers book under their logged-in identity ("BOOKING AS …" line replaces the name/phone inputs); staff keeps inputs to book on behalf of customers. Slot rail still shows TAKEN for all bookings (availability without identity).
 
+## 3b. Same-day follow-ups (owner feedback after first demo check)
+- Customers no longer see any staff entry point: `StaffControl` returns null unless `currentUser.role === 'staff'`; a customer's only header action is Logout (Home).
+- Promo banner: `ClubState.promo: string` (same safe-merge migration, defaults ''); staff-only "Offer" ghost button in the Home header opens a sheet (set / remove); banner shows for everyone at the top of Home when non-empty (surface2 fill, brass OFFER eyebrow).
+
 ## 4. Known demo limitations (accepted)
 - No passwords; anyone entering the same phone number sees those bookings. Real auth is v2 backend scope.
 - Staff identity is a single shared "Staff" account behind the PIN.

@@ -12,7 +12,7 @@ A mobile app for the club, built with Expo (React Native + TypeScript). Runs on 
 
 **Login (demo, on-device):** the app opens on a sign-in screen — customers enter name + 10-digit phone (the phone identifies their bookings; no password in the demo), staff enter PIN `1234`. Customers only ever see their own bookings; staff sees everything. Logout is in the Home header.
 
-**Staff mode:** log in as Staff (or tap the STAFF control in any header) with PIN `1234`. Staff mode unlocks billing, rates, member registration, cancellations, and tournament controls.
+**Staff mode:** log in as Staff with PIN `1234` (customers see no staff entry point). Staff mode unlocks billing, rates, member registration, cancellations, tournament controls, and the Home promo-offer banner (Offer button in the Home header).
 
 Data is saved on the device (AsyncStorage) — it survives app restarts. No server needed for v1.
 

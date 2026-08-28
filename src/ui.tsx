@@ -148,6 +148,9 @@ export const StaffControl = () => {
   const [open, setOpen] = useState(false);
   const [pin, setPin] = useState('');
 
+  // customers never see a staff entry point; only staff-role logins get the toggle
+  if (state.currentUser?.role !== 'staff') return null;
+
   const close = () => {
     setOpen(false);
     setPin('');

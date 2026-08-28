@@ -35,6 +35,10 @@ All logic lives in `src/store.tsx`.
 - Customers see ONLY their own bookings (rows where `booking.phone === currentUser.phone`) on Home "Today's bookings" and Book "Upcoming bookings"; staff sees all. Slot availability (TAKEN cells) still reflects all bookings — availability without identity.
 - Customers book under their logged-in identity (no name/phone inputs); staff keeps the inputs to book on behalf of customers.
 - No backend/db — this is device-local demo auth, to be replaced by real auth in the v2 backend phase.
+- The header STAFF control renders ONLY for staff-role logins (customers see no staff entry point at all — StaffControl returns null for them; their only header action is Logout on Home).
+
+**Promo banner (added 2026-08-28)**
+- `state.promo` (string, '' = hidden). Staff-only "Offer" ghost button in the Home header opens a sheet to set/remove the text; everyone sees the banner (surface2 fill, brass OFFER eyebrow) at the top of Home when non-empty.
 
 **Staff mode**
 - Toggled via PIN sheet (state.staffPin); staffMode is session-only (not persisted)

@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Text, View } from 'react-native';
 import { C, S, T } from '../theme';
-import { Btn, Empty, ListRow, Screen, StatTile } from '../ui';
+import { Btn, Empty, Input, Label, ListRow, Screen, Sheet, StatTile } from '../ui';
 import { fmtHour, fmtMoney, todayISO, useStore } from '../store';
 
 const SectionHeader = ({ title, count }: { title: string; count?: string }) => (
@@ -23,9 +23,16 @@ const SectionHeader = ({ title, count }: { title: string; count?: string }) => (
 );
 
 export default function Dashboard() {
-  const { state, staffMode, logout } = useStore();
+  const { state, staffMode, logout, setPromo } = useStore();
   const today = todayISO();
   const me = state.currentUser;
+  const [promoOpen, setPromoOpen] = useState(false);
+  const [promoDraft, setPromoDraft] = useState('');
+
+  const openPromoEditor = () => {
+    setPromoDraft(state.promo);
+    setPromoOpen(true);
+  };
 
   const activeTables = state.tables.filter((t) => t.sessionStart != null);
   const todaySales = state.sales.filter(
@@ -47,8 +54,28 @@ export default function Dashboard() {
     <Screen
       title="Kakul"
       subtitle={`OPEN ${fmtHour(state.openHour)} – ${fmtHour(state.closeHour)} · ${weekday}`}
-      headerAction={<Btn kind="ghost" label="Logout" onPress={logout} />}
+      headerAction={
+        <>
+          {staffMode && <Btn kind="ghost" label="Offer" onPress={openPromoEditor} />}
+          <Btn kind="ghost" label="Logout" onPress={logout} />
+        </>
+      }
     >
+      {state.promo ? (
+        <View
+          style={{
+            backgroundColor: C.surface2,
+            borderBottomWidth: S.rule,
+            borderBottomColor: C.rule,
+            paddingVertical: S.s4,
+            paddingHorizontal: S.s5,
+            gap: 4,
+          }}
+        >
+          <Text style={[T.micro, { color: C.brass }]}>OFFER</Text>
+          <Text style={[T.body, { color: C.ink }]}>{state.promo}</Text>
+        </View>
+      ) : null}
       <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
         <StatTile
           label="In play"
@@ -112,6 +139,36 @@ export default function Dashboard() {
           )}
         </>
       )}
+
+      <Sheet visible={promoOpen} onClose={() => setPromoOpen(false)} title="PROMOTIONAL OFFER">
+        <View>
+          <Label>Offer text</Label>
+          <Input
+            value={promoDraft}
+            onChangeText={setPromoDraft}
+            placeholder="e.g. 20% off snooker before 2 PM"
+          />
+        </View>
+        <Btn
+          kind="primary"
+          size="sheet"
+          label="Save offer"
+          onPress={() => {
+            setPromo(promoDraft.trim());
+            setPromoOpen(false);
+          }}
+        />
+        {state.promo ? (
+          <Btn
+            kind="danger"
+            label="Remove offer"
+            onPress={() => {
+              setPromo('');
+              setPromoOpen(false);
+            }}
+          />
+        ) : null}
+      </Sheet>
     </Screen>
   );
 }
