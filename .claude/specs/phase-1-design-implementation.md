@@ -1,4 +1,4 @@
-Status: PHASE READY — implemented in commit c368617 and verified by reviewer agent 2026-08-28: all 10 §8 checklist items PASS, all 5 exit criteria PASS (tsc + expo export re-run independently), functional scope provably unchanged (store.tsx/types.ts diff empty), 15/16 mockups matched (members-customer.png is the known duplicate, open item 5). 5 advisory notes, none blocking — see review notes below §6. Awaiting Akash's on-device check in Expo Go.
+Status: PHASE READY — implemented in commit c368617 and verified by reviewer agent 2026-08-28: all 10 §8 checklist items PASS, all 5 exit criteria PASS (tsc + expo export re-run independently), functional scope provably unchanged (store.tsx/types.ts diff empty), 16/16 mockups now matched after light-theme hand-back v3 (2026-08-28) re-exported all screens; former members-customer duplicate corrected — see open items 2a and 5. 5 advisory notes, none blocking — see review notes below §6. Awaiting Akash's on-device check in Expo Go.
 
 # Phase 1 — Visual Redesign Implementation
 
@@ -176,7 +176,8 @@ Build every table unit, member row, tournament card, bracket, and slot rail **in
 
 ## Open items from the design hand-back (none blocking)
 1. Zero radius — CONFIRMED by Akash 2026-08-27 (see memory/design_decisions.md).
+2a. Palette drift RESOLVED 2026-08-28: hand-back v3 re-rendered all mockups + spec §1 on the shipped light theme (hex-verified against src/theme.ts).
 2. Club data (rates/hours/PIN) — still placeholders; mockups + tokens spec use ₹200/₹150, 10 AM–11 PM, PIN 1234. Real values are phase-2 scope; do not hardcode anything new that makes them harder to change.
 3. Add-table and Add-member sheets — RESOLVED 2026-08-27: mockups delivered in hand-back v2 (tables-add-table-sheet.png, members-add-member-sheet.png).
 4. Tourney bracket — Akash chose to skip the horizontal Bracket view capture; Rounds view PNG is the reference (staff tap there).
-5. `members-customer.png` in the hand-back is a byte-identical duplicate of `book-customer.png` (confirmed via checksum) — Members customer-view mockup is missing. Implement from §5.19/§6 + `members-staff.png` minus staff surfaces (no phone, no + Member, STAFF control off). Request corrected export from Claude Design (non-blocking).
+5. RESOLVED 2026-08-28: light-theme hand-back v3 re-exported all 16 mockups; members-customer.png is now a distinct, correct Members screen (checksum-verified different from book-customer.png). Design also corrected the STAFF ON control to its blue-border §5.3 state in the re-render.

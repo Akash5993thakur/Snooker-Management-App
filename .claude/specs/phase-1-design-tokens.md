@@ -1,6 +1,6 @@
 # Phase 1 — Design Tokens & Component Specs
 
-**Direction:** Felt & Brass
+**Direction:** Modernist structure, light theme (owner-directed 2026-08-28 — white ground, blue accent). Token *names* are carried over from the original Felt & Brass pass so no component signature changed.
 **Source of truth for:** `src/theme.ts`, `src/ui.tsx`, `src/screens/*`
 **Scope:** visual redesign only. Functional scope is fixed by `design-handoff.md` §4.
 **Artboard:** 390 × 844 pt (iPhone). All measurements below are in **points**.
@@ -10,7 +10,9 @@
 
 ## 0. The direction in one paragraph
 
-Modernist structure on a dark felt ground. Everything is flat: **zero corner radius anywhere**, 2 pt rules doing all the dividing, labels flush left (including inside wide buttons), and Archivo throughout. **Brass `#E3A93B` is the single accent** — it carries every primary action, every money value, every selected state. **Red `#EC3013` is reserved for IN PLAY and destructive actions only**, which is what makes a live table impossible to miss. Green appears only as the FREE outline and the booking-confirmed banner, so the felt reads as environment rather than decoration. No cards, no shadows, no gradients.
+Modernist structure on a white ground. Everything is flat: **zero corner radius anywhere**, 2 pt rules doing all the dividing, labels flush left (including inside wide buttons), and Archivo throughout. **Blue `#1558D6` is the single accent** — it carries every button label, every money value, every selected fill. **Red `#D7301F` is reserved for IN PLAY and destructive actions only**, which is what makes a live table impossible to miss. Green appears only as the FREE outline and the booking-confirmed banner. No cards, no shadows, no gradients.
+
+The light theme replaced the original dark felt palette on the owner's direction. Structure, type scale, spacing, icons and every component spec below are unchanged — only the hexes in §1 moved, plus the one shape change noted in §5.8 (primary buttons are a soft-tint fill with an accent label rather than a solid accent fill).
 
 ---
 
@@ -20,25 +22,26 @@ Semantic names map 1:1 onto `src/theme.ts`.
 
 | Token | Hex | Use |
 | --- | --- | --- |
-| `ground` | `#0B120F` | App background, tab bar background |
-| `surface` | `#111C17` | Bottom sheets, inputs, taken slot fill |
-| `surface2` | `#17251E` | In-play table unit, loyalty banner |
-| `rule` | `#24382E` | Every 2 pt divider, all control borders |
-| `ruleFaint` | `#1A2721` | Border of a disabled (taken) slot only |
-| `ink` | `#F1F5F2` | Primary text |
-| `inkDim` | `#93A89C` | Secondary text, inactive control labels |
-| `inkFaint` | `#62786C` | Eyebrow labels, meta lines, inactive tabs |
-| `inkMute` | `#3E5247` | Disabled text (taken slot, bye slot) |
-| `brass` | `#E3A93B` | **Single accent.** Primary fill, money, points, selection, sheet top border |
-| `brassInk` | `#0B120F` | Text on a brass fill (= `ground`) |
-| `live` | `#EC3013` | IN PLAY badge + top bar, destructive actions |
+| `ground` | `#FFFFFF` | App background, tab bar background |
+| `surface` | `#F5F7F9` | Bottom sheets, inputs, taken slot fill |
+| `surface2` | `#EDF1F4` | In-play table unit, loyalty banner |
+| `rule` | `#D9DEE3` | Every 2 pt divider, all control borders |
+| `ruleFaint` | `#E9EDF0` | Border of a disabled (taken) slot only |
+| `ink` | `#15181B` | Primary text |
+| `inkDim` | `#4E5A64` | Secondary text, inactive control labels |
+| `inkFaint` | `#7C8790` | Eyebrow labels, meta lines, inactive tabs |
+| `inkMute` | `#AEB7BE` | Disabled text (taken slot, bye slot) |
+| `brass` | `#1558D6` | **Single accent** (blue). Selected fills, money, points, all button labels |
+| `brassInk` | `#FFFFFF` | Text on an accent fill |
+| `accentSoft` | `#E7EEFB` | Primary-button fill (label is `brass`) |
+| `live` | `#D7301F` | IN PLAY badge + top bar, destructive actions |
 | `liveInk` | `#FFFFFF` | Text on a live fill |
 | `felt` | `#1E7A4C` | FREE tag border, booking-confirmed banner fill |
-| `feltText` | `#4FBF87` | FREE label text on `ground` |
-| `scrim` | `rgba(4, 9, 7, 0.72)` | Bottom-sheet backdrop |
+| `feltText` | `#177347` | FREE label text on `ground` |
+| `scrim` | `rgba(9, 14, 20, 0.45)` | Bottom-sheet backdrop |
 
 **Rules of use**
-- Brass appears at most twice per viewport as a *fill*; unlimited as text.
+- The accent appears at most twice per viewport as a solid *fill*; unlimited as text. `accentSoft` is not counted — it is the button ground.
 - Red is never used for emphasis, warnings, or badges other than LIVE and Cancel.
 - No color outside this table. No gradients. No shadows (`elevation: 0` on every surface).
 
@@ -46,22 +49,23 @@ Semantic names map 1:1 onto `src/theme.ts`.
 
 ```ts
 export const C = {
-  ground: '#0B120F',
-  surface: '#111C17',
-  surface2: '#17251E',
-  rule: '#24382E',
-  ruleFaint: '#1A2721',
-  ink: '#F1F5F2',
-  inkDim: '#93A89C',
-  inkFaint: '#62786C',
-  inkMute: '#3E5247',
-  brass: '#E3A93B',
-  brassInk: '#0B120F',
-  live: '#EC3013',
+  ground: '#FFFFFF',
+  surface: '#F5F7F9',
+  surface2: '#EDF1F4',
+  rule: '#D9DEE3',
+  ruleFaint: '#E9EDF0',
+  ink: '#15181B',
+  inkDim: '#4E5A64',
+  inkFaint: '#7C8790',
+  inkMute: '#AEB7BE',
+  brass: '#1558D6',
+  brassInk: '#FFFFFF',
+  accentSoft: '#E7EEFB',
+  live: '#D7301F',
   liveInk: '#FFFFFF',
   felt: '#1E7A4C',
-  feltText: '#4FBF87',
-  scrim: 'rgba(4, 9, 7, 0.72)',
+  feltText: '#177347',
+  scrim: 'rgba(9, 14, 20, 0.45)',
 } as const;
 ```
 
@@ -225,8 +229,8 @@ Customers see the badge, timer and customer name but **not** the running bill.
 
 | Variant | Height | Fill | Border | Label |
 | --- | --- | --- | --- | --- |
-| Primary | 48 (52 in sheets) | `brass` | none | `brassInk`, `label` 13 |
-| Secondary | 44 | transparent | 2 pt `rule` | `inkDim`, 12 |
+| Primary | 48 (52 in sheets) | `accentSoft` | none | `brass`, `label` 13 |
+| Secondary | 44 | transparent | 2 pt `rule` | `brass`, 12 |
 | Danger | 44 | transparent | 2 pt `live` | `live`, 11 |
 | Ghost / header action | 36 | transparent | 2 pt `brass` | `brass`, 11 |
 | Disabled | as variant | as variant | as variant | `opacity: 0.45`, not pressable |
@@ -339,7 +343,7 @@ Every screen: 44 pt status bar → 72 pt header → scroll view (`top: 116`, `bo
 
 ## 7. Mockups
 
-`design/mockups/`
+`design/mockups/` — 16 PNGs, re-rendered on the light theme 2026-08-28.
 
 | File | State |
 | --- | --- |
@@ -370,7 +374,7 @@ Every screen: 44 pt status bar → 72 pt header → scroll view (`top: 116`, `bo
 - [ ] Every divider is exactly 2 pt in `rule`; the in-play bar and sheet top are 5 pt.
 - [ ] Every button label is `textAlign: 'left'`.
 - [ ] Every touch target ≥ 44 pt; slot cells are 84 pt; bracket rows 46 pt.
-- [ ] Brass is the only accent fill; red only for IN PLAY and Cancel.
+- [ ] Blue is the only accent; red only for IN PLAY and Cancel. Primary buttons use `accentSoft` + `brass` label.
 - [ ] Timers and money render in JetBrains Mono, never Archivo.
 - [ ] The staff control sits in the header on all five screens and shows the STAFF ON state.
 - [ ] All five empty states use the dashed box, with the copy in §5.15.

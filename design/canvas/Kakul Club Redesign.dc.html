@@ -16,10 +16,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
   body { margin: 0; background: #E7E5E2; }
-  a { color: #E3A93B; text-decoration: none; }
-  a:hover { color: #F2C062; }
-  .scr::-webkit-scrollbar { width: 0; height: 0; }
-  .rail::-webkit-scrollbar { height: 0; }
+  a { color: #1558D6; text-decoration: none; }
+  a:hover { color: #0F44A8; }
+  .scr, .rail { scrollbar-width: none; -ms-overflow-style: none; }
+  .scr::-webkit-scrollbar, .rail::-webkit-scrollbar { width: 0; height: 0; display: none; }
+  .scr { overflow-x: hidden; }
 </style>
 </helmet>
 
@@ -30,8 +31,8 @@
       <span style="font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; border: 2px solid #201E1D; padding: 4px 8px;">1a</span>
       <span style="font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #6B6663;">Kakul Snooker &amp; Pool Club — visual redesign</span>
     </div>
-    <h1 style="margin: 0; font-size: 52px; line-height: 1.02; font-weight: 800; letter-spacing: -0.02em;">Felt &amp; Brass</h1>
-    <p style="margin: 0; max-width: 720px; font-size: 16px; line-height: 1.5; color: #46413E; text-wrap: pretty;">Modernist structure — flush-left labels, 2px rules, zero corner radius, Archivo throughout — retuned onto a dark felt ground. Brass is the single accent and carries every primary action; red is reserved for live sessions and destructive actions only. Every frame below is live: tap tabs, start and stop sessions, pick slots, record match winners.</p>
+    <h1 style="margin: 0; font-size: 52px; line-height: 1.02; font-weight: 800; letter-spacing: -0.02em;">Ink &amp; Blue</h1>
+    <p style="margin: 0; max-width: 720px; font-size: 16px; line-height: 1.5; color: #46413E; text-wrap: pretty;">Modernist structure — flush-left labels, 2px rules, zero corner radius, Archivo throughout — on the owner-directed light theme: white ground, blue accent. Blue is the single accent and carries every primary action; red is reserved for live sessions and destructive actions only. Every frame below is live: tap tabs, start and stop sessions, pick slots, record match winners.</p>
   </div>
 
   <div style="display: flex; flex-wrap: wrap; gap: 40px 32px;">
@@ -42,26 +43,26 @@
           <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #6B6663;">{{ f.modeLabel }}</span>
         </div>
 
-        <div id="{{ f.id }}" style="position: relative; width: 390px; height: 844px; background: #0B120F; overflow: hidden; border: 2px solid #201E1D; font-family: Archivo, sans-serif;">
+        <div id="{{ f.id }}" style="position: relative; width: 390px; height: 844px; background: #FFFFFF; overflow: hidden; border: 2px solid #201E1D; font-family: Archivo, sans-serif;">
 
-          <div style="height: 44px; display: flex; align-items: flex-end; justify-content: space-between; padding: 0 20px 6px; color: #93A89C; font-size: 12px; font-weight: 700; letter-spacing: 0.04em;">
+          <div style="height: 44px; display: flex; align-items: flex-end; justify-content: space-between; padding: 0 20px 6px; color: #4E5A64; font-size: 12px; font-weight: 700; letter-spacing: 0.04em;">
             <span style="font-family: 'JetBrains Mono', monospace;">{{ f.clockLabel }}</span>
             <span style="display: flex; gap: 5px; align-items: center;">
-              <span style="display: block; width: 15px; height: 9px; border: 1.5px solid #93A89C;"></span>
-              <span style="display: block; width: 3px; height: 9px; background: #93A89C;"></span>
+              <span style="display: block; width: 15px; height: 9px; border: 1.5px solid #4E5A64;"></span>
+              <span style="display: block; width: 3px; height: 9px; background: #4E5A64;"></span>
             </span>
           </div>
 
-          <div style="display: flex; align-items: flex-start; justify-content: space-between; padding: 8px 20px 14px; border-bottom: 2px solid #24382E;">
+          <div style="display: flex; align-items: flex-start; justify-content: space-between; padding: 8px 20px 14px; border-bottom: 2px solid #D9DEE3;">
             <div style="display: flex; flex-direction: column; gap: 3px; flex: 1; min-width: 0;">
-              <span style="font-size: 26px; font-weight: 800; letter-spacing: -0.01em; color: #F1F5F2; line-height: 1;">{{ f.title }}</span>
-              <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #62786C; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ f.subtitle }}</span>
+              <span style="font-size: 26px; font-weight: 800; letter-spacing: -0.01em; color: #15181B; line-height: 1;">{{ f.title }}</span>
+              <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #7C8790; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ f.subtitle }}</span>
             </div>
             <div style="display: flex; align-items: center; gap: 8px; padding-top: 4px; flex: 0 0 auto; white-space: nowrap;">
               <sc-if value="{{ f.headerAction }}" hint-placeholder-val="{{ true }}">
-                <button onClick="{{ f.onHeaderAction }}" style="border: 2px solid #E3A93B; background: transparent; color: #E3A93B; font-family: Archivo, sans-serif; font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; padding: 9px 10px; cursor: pointer; min-height: 36px; white-space: nowrap; flex: 0 0 auto;">{{ f.headerAction }}</button>
+                <button onClick="{{ f.onHeaderAction }}" style="border: 2px solid #1558D6; background: transparent; color: #1558D6; font-family: Archivo, sans-serif; font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; padding: 9px 10px; cursor: pointer; min-height: 36px; white-space: nowrap; flex: 0 0 auto;">{{ f.headerAction }}</button>
               </sc-if>
-              <button onClick="{{ f.onStaffToggle }}" style="border: 2px solid #24382E; background: transparent; color: #93A89C; font-family: Archivo, sans-serif; font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; padding: 9px 10px; cursor: pointer; min-height: 36px; white-space: nowrap; flex: 0 0 auto;">
+              <button onClick="{{ f.onStaffToggle }}" style="border: 2px solid {{ f.staffBorder }}; background: transparent; color: #4E5A64; font-family: Archivo, sans-serif; font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; padding: 9px 10px; cursor: pointer; min-height: 36px; white-space: nowrap; flex: 0 0 auto;">
                 <span style="{{ f.staffBtnStyle }}">{{ f.staffBtnLabel }}</span>
               </button>
             </div>
@@ -71,59 +72,59 @@
 
             <sc-if value="{{ f.isHome }}" hint-placeholder-val="{{ true }}">
               <div style="display: flex; flex-direction: column;">
-                <div style="display: grid; grid-template-columns: 1fr 1fr; border-bottom: 2px solid #24382E;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; border-bottom: 2px solid #D9DEE3;">
                   <sc-for list="{{ f.stats }}" as="s" hint-placeholder-count="4">
-                    <div style="padding: 18px 20px; border-right: 2px solid #24382E; border-bottom: 2px solid #24382E; display: flex; flex-direction: column; gap: 6px;">
-                      <span style="font-size: 11px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #62786C;">{{ s.label }}</span>
+                    <div style="padding: 18px 20px; border-right: 2px solid #D9DEE3; border-bottom: 2px solid #D9DEE3; display: flex; flex-direction: column; gap: 6px;">
+                      <span style="font-size: 11px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #7C8790;">{{ s.label }}</span>
                       <span style="font-family: 'JetBrains Mono', monospace; font-size: 30px; font-weight: 700; line-height: 1; {{ s.valueStyle }}">{{ s.value }}</span>
                     </div>
                   </sc-for>
                 </div>
 
                 <div style="padding: 20px 20px 8px; display: flex; align-items: baseline; justify-content: space-between;">
-                  <span style="font-size: 13px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: #F1F5F2;">Today's bookings</span>
-                  <span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #62786C;">{{ f.bookingCount }}</span>
+                  <span style="font-size: 13px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: #15181B;">Today's bookings</span>
+                  <span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #7C8790;">{{ f.bookingCount }}</span>
                 </div>
                 <sc-for list="{{ f.todayBookings }}" as="b" hint-placeholder-count="3">
-                  <div style="display: flex; align-items: center; gap: 14px; padding: 13px 20px; border-top: 2px solid #24382E;">
-                    <span style="font-family: 'JetBrains Mono', monospace; font-size: 15px; font-weight: 700; color: #E3A93B; width: 62px;">{{ b.time }}</span>
-                    <span style="flex: 1; font-size: 15px; font-weight: 600; color: #F1F5F2;">{{ b.name }}</span>
-                    <span style="font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #93A89C;">{{ b.table }}</span>
+                  <div style="display: flex; align-items: center; gap: 14px; padding: 13px 20px; border-top: 2px solid #D9DEE3;">
+                    <span style="font-family: 'JetBrains Mono', monospace; font-size: 15px; font-weight: 700; color: #1558D6; width: 62px;">{{ b.time }}</span>
+                    <span style="flex: 1; font-size: 15px; font-weight: 600; color: #15181B;">{{ b.name }}</span>
+                    <span style="font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #4E5A64;">{{ b.table }}</span>
                   </div>
                 </sc-for>
                 <sc-if value="{{ f.noBookings }}" hint-placeholder-val="{{ false }}">
-                  <div style="margin: 0 20px; border: 2px dashed #24382E; padding: 22px 18px; display: flex; flex-direction: column; gap: 6px;">
-                    <span style="font-size: 13px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #93A89C;">No bookings yet</span>
-                    <span style="font-size: 13px; color: #62786C; line-height: 1.4;">Slots open from 10 AM. Book one from the Book tab.</span>
+                  <div style="margin: 0 20px; border: 2px dashed #D9DEE3; padding: 22px 18px; display: flex; flex-direction: column; gap: 6px;">
+                    <span style="font-size: 13px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #4E5A64;">No bookings yet</span>
+                    <span style="font-size: 13px; color: #7C8790; line-height: 1.4;">Slots open from 10 AM. Book one from the Book tab.</span>
                   </div>
                 </sc-if>
 
-                <div style="padding: 26px 20px 8px; display: flex; align-items: baseline; justify-content: space-between; border-top: 2px solid #24382E; margin-top: 14px;">
-                  <span style="font-size: 13px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: #F1F5F2;">Tournaments</span>
+                <div style="padding: 26px 20px 8px; display: flex; align-items: baseline; justify-content: space-between; border-top: 2px solid #D9DEE3; margin-top: 14px;">
+                  <span style="font-size: 13px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: #15181B;">Tournaments</span>
                 </div>
                 <sc-for list="{{ f.tourneyRows }}" as="t" hint-placeholder-count="2">
-                  <div style="padding: 14px 20px; border-top: 2px solid #24382E; display: flex; flex-direction: column; gap: 7px;">
+                  <div style="padding: 14px 20px; border-top: 2px solid #D9DEE3; display: flex; flex-direction: column; gap: 7px;">
                     <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px;">
-                      <span style="font-size: 16px; font-weight: 700; color: #F1F5F2;">{{ t.name }}</span>
+                      <span style="font-size: 16px; font-weight: 700; color: #15181B;">{{ t.name }}</span>
                       <span style="font-size: 10px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; padding: 4px 7px; {{ t.badgeStyle }}">{{ t.status }}</span>
                     </div>
-                    <div style="display: flex; gap: 16px; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #62786C;">
+                    <div style="display: flex; gap: 16px; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #7C8790;">
                       <span>{{ t.date }}</span><span>{{ t.players }}</span><span>{{ t.fee }}</span>
                     </div>
                   </div>
                 </sc-for>
 
                 <sc-if value="{{ f.staff }}" hint-placeholder-val="{{ false }}">
-                  <div style="padding: 26px 20px 8px; border-top: 2px solid #24382E; margin-top: 14px;">
-                    <span style="font-size: 13px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: #F1F5F2;">Recent billing</span>
+                  <div style="padding: 26px 20px 8px; border-top: 2px solid #D9DEE3; margin-top: 14px;">
+                    <span style="font-size: 13px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: #15181B;">Recent billing</span>
                   </div>
                   <sc-for list="{{ f.sales }}" as="s" hint-placeholder-count="3">
-                    <div style="display: flex; align-items: center; gap: 12px; padding: 13px 20px; border-top: 2px solid #24382E;">
+                    <div style="display: flex; align-items: center; gap: 12px; padding: 13px 20px; border-top: 2px solid #D9DEE3;">
                       <div style="flex: 1; display: flex; flex-direction: column; gap: 3px;">
-                        <span style="font-size: 15px; font-weight: 600; color: #F1F5F2;">{{ s.customer }}</span>
-                        <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #62786C;">{{ s.meta }}</span>
+                        <span style="font-size: 15px; font-weight: 600; color: #15181B;">{{ s.customer }}</span>
+                        <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #7C8790;">{{ s.meta }}</span>
                       </div>
-                      <span style="font-family: 'JetBrains Mono', monospace; font-size: 17px; font-weight: 700; color: #E3A93B;">{{ s.amount }}</span>
+                      <span style="font-family: 'JetBrains Mono', monospace; font-size: 17px; font-weight: 700; color: #1558D6;">{{ s.amount }}</span>
                     </div>
                   </sc-for>
                 </sc-if>
@@ -134,51 +135,51 @@
             <sc-if value="{{ f.isTables }}" hint-placeholder-val="{{ false }}">
               <div style="display: flex; flex-direction: column;">
                 <sc-for list="{{ f.busyTables }}" as="t" hint-placeholder-count="1">
-                  <div style="border-bottom: 2px solid #24382E; background: #17251E;">
-                    <div style="height: 5px; background: #EC3013;"></div>
+                  <div style="border-bottom: 2px solid #D9DEE3; background: #EDF1F4;">
+                    <div style="height: 5px; background: #D7301F;"></div>
                     <div style="padding: 16px 20px 18px; display: flex; flex-direction: column; gap: 14px;">
                       <div style="display: flex; align-items: flex-start; justify-content: space-between;">
                         <div style="display: flex; flex-direction: column; gap: 4px;">
-                          <span style="font-size: 22px; font-weight: 800; color: #F1F5F2; letter-spacing: -0.01em;">{{ t.name }}</span>
-                          <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #62786C;">{{ t.meta }}</span>
+                          <span style="font-size: 22px; font-weight: 800; color: #15181B; letter-spacing: -0.01em;">{{ t.name }}</span>
+                          <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #7C8790;">{{ t.meta }}</span>
                         </div>
-                        <span style="display: flex; align-items: center; gap: 7px; background: #EC3013; color: #FFFFFF; font-size: 11px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; padding: 6px 9px;">
+                        <span style="display: flex; align-items: center; gap: 7px; background: #D7301F; color: #FFFFFF; font-size: 11px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; padding: 6px 9px;">
                           <span style="display: block; width: 7px; height: 7px; background: #FFFFFF;"></span>In play
                         </span>
                       </div>
-                      <div style="display: flex; align-items: flex-end; justify-content: space-between; border-top: 2px solid #24382E; padding-top: 14px;">
+                      <div style="display: flex; align-items: flex-end; justify-content: space-between; border-top: 2px solid #D9DEE3; padding-top: 14px;">
                         <div style="display: flex; flex-direction: column; gap: 4px;">
-                          <span style="font-size: 11px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #62786C;">Elapsed</span>
-                          <span style="font-family: 'JetBrains Mono', monospace; font-size: 34px; font-weight: 700; color: #F1F5F2; line-height: 1;">{{ t.elapsed }}</span>
-                          <span style="font-size: 14px; font-weight: 600; color: #93A89C;">{{ t.customer }}</span>
+                          <span style="font-size: 11px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #7C8790;">Elapsed</span>
+                          <span style="font-family: 'JetBrains Mono', monospace; font-size: 34px; font-weight: 700; color: #15181B; line-height: 1;">{{ t.elapsed }}</span>
+                          <span style="font-size: 14px; font-weight: 600; color: #4E5A64;">{{ t.customer }}</span>
                         </div>
                         <sc-if value="{{ f.staff }}" hint-placeholder-val="{{ false }}">
                           <div style="display: flex; flex-direction: column; gap: 4px; align-items: flex-start;">
-                            <span style="font-size: 11px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #62786C;">Running bill</span>
-                            <span style="font-family: 'JetBrains Mono', monospace; font-size: 34px; font-weight: 700; color: #E3A93B; line-height: 1;">{{ t.bill }}</span>
+                            <span style="font-size: 11px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #7C8790;">Running bill</span>
+                            <span style="font-family: 'JetBrains Mono', monospace; font-size: 34px; font-weight: 700; color: #1558D6; line-height: 1;">{{ t.bill }}</span>
                           </div>
                         </sc-if>
                       </div>
                       <sc-if value="{{ f.staff }}" hint-placeholder-val="{{ false }}">
-                        <button onClick="{{ t.onStop }}" style="width: 100%; min-height: 48px; border: 0; background: #E3A93B; color: #0B120F; font-family: Archivo, sans-serif; font-size: 13px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; text-align: left; padding: 0 16px; cursor: pointer;">Stop &amp; bill</button>
+                        <button onClick="{{ t.onStop }}" style="width: 100%; min-height: 48px; border: 0; background: #E7EEFB; color: #1558D6; font-family: Archivo, sans-serif; font-size: 13px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; text-align: left; padding: 0 16px; cursor: pointer;">Stop &amp; bill</button>
                       </sc-if>
                     </div>
                   </div>
                 </sc-for>
 
                 <sc-for list="{{ f.freeTables }}" as="t" hint-placeholder-count="3">
-                  <div style="padding: 16px 20px; border-bottom: 2px solid #24382E; display: flex; flex-direction: column; gap: 12px;">
+                  <div style="padding: 16px 20px; border-bottom: 2px solid #D9DEE3; display: flex; flex-direction: column; gap: 12px;">
                     <div style="display: flex; align-items: center; justify-content: space-between;">
                       <div style="display: flex; flex-direction: column; gap: 4px;">
-                        <span style="font-size: 18px; font-weight: 700; color: #F1F5F2;">{{ t.name }}</span>
-                        <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #62786C;">{{ t.meta }}</span>
+                        <span style="font-size: 18px; font-weight: 700; color: #15181B;">{{ t.name }}</span>
+                        <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #7C8790;">{{ t.meta }}</span>
                       </div>
-                      <span style="border: 2px solid #1E7A4C; color: #4FBF87; font-size: 11px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; padding: 5px 8px;">Free</span>
+                      <span style="border: 2px solid #1E7A4C; color: #177347; font-size: 11px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; padding: 5px 8px;">Free</span>
                     </div>
                     <sc-if value="{{ f.staff }}" hint-placeholder-val="{{ false }}">
                       <div style="display: flex; gap: 10px;">
-                        <button onClick="{{ t.onStart }}" style="flex: 1; min-height: 44px; border: 0; background: #E3A93B; color: #0B120F; font-family: Archivo, sans-serif; font-size: 12px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; text-align: left; padding: 0 14px; cursor: pointer;">Start</button>
-                        <button onClick="{{ t.onRate }}" style="min-height: 44px; border: 2px solid #24382E; background: transparent; color: #93A89C; font-family: Archivo, sans-serif; font-size: 12px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; padding: 0 16px; cursor: pointer;">Rate</button>
+                        <button onClick="{{ t.onStart }}" style="flex: 1; min-height: 44px; border: 0; background: #E7EEFB; color: #1558D6; font-family: Archivo, sans-serif; font-size: 12px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; text-align: left; padding: 0 14px; cursor: pointer;">Start</button>
+                        <button onClick="{{ t.onRate }}" style="min-height: 44px; border: 2px solid #D9DEE3; background: transparent; color: #4E5A64; font-family: Archivo, sans-serif; font-size: 12px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; padding: 0 16px; cursor: pointer;">Rate</button>
                       </div>
                     </sc-if>
                   </div>
@@ -189,32 +190,32 @@
 
             <sc-if value="{{ f.isBook }}" hint-placeholder-val="{{ false }}">
               <div style="display: flex; flex-direction: column;">
-                <div style="padding: 18px 20px 16px; border-bottom: 2px solid #24382E; display: flex; flex-direction: column; gap: 10px;">
-                  <span style="font-size: 11px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: #62786C;">Day</span>
-                  <div style="display: flex; border: 2px solid #24382E;">
+                <div style="padding: 18px 20px 16px; border-bottom: 2px solid #D9DEE3; display: flex; flex-direction: column; gap: 10px;">
+                  <span style="font-size: 11px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: #7C8790;">Day</span>
+                  <div style="display: flex; border: 2px solid #D9DEE3;">
                     <sc-for list="{{ f.days }}" as="d" hint-placeholder-count="3">
-                      <button onClick="{{ d.onTap }}" style="flex: 1; min-height: 44px; border: 0; border-right: 2px solid #24382E; font-family: Archivo, sans-serif; font-size: 12px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; {{ d.style }}">{{ d.label }}</button>
+                      <button onClick="{{ d.onTap }}" style="flex: 1; min-height: 44px; border: 0; border-right: 2px solid #D9DEE3; font-family: Archivo, sans-serif; font-size: 12px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; {{ d.style }}">{{ d.label }}</button>
                     </sc-for>
                   </div>
                 </div>
 
-                <div style="padding: 18px 0 16px; border-bottom: 2px solid #24382E; display: flex; flex-direction: column; gap: 10px;">
-                  <span style="padding: 0 20px; font-size: 11px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: #62786C;">Table</span>
+                <div style="padding: 18px 0 16px; border-bottom: 2px solid #D9DEE3; display: flex; flex-direction: column; gap: 10px;">
+                  <span style="padding: 0 20px; font-size: 11px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: #7C8790;">Table</span>
                   <div class="rail" style="display: flex; gap: 10px; overflow-x: auto; padding: 0 20px;">
                     <sc-for list="{{ f.tableChips }}" as="c" hint-placeholder-count="5">
-                      <button onClick="{{ c.onTap }}" style="flex: 0 0 auto; min-height: 44px; border: 2px solid #24382E; font-family: Archivo, sans-serif; font-size: 12px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; padding: 0 14px; cursor: pointer; {{ c.style }}">{{ c.label }}</button>
+                      <button onClick="{{ c.onTap }}" style="flex: 0 0 auto; min-height: 44px; border: 2px solid #D9DEE3; font-family: Archivo, sans-serif; font-size: 12px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; padding: 0 14px; cursor: pointer; {{ c.style }}">{{ c.label }}</button>
                     </sc-for>
                   </div>
                 </div>
 
-                <div style="padding: 18px 0 18px; border-bottom: 2px solid #24382E; display: flex; flex-direction: column; gap: 12px;">
+                <div style="padding: 18px 0 18px; border-bottom: 2px solid #D9DEE3; display: flex; flex-direction: column; gap: 12px;">
                   <div style="padding: 0 20px; display: flex; align-items: baseline; justify-content: space-between;">
-                    <span style="font-size: 11px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: #62786C;">Time slot</span>
-                    <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #62786C;">Swipe →</span>
+                    <span style="font-size: 11px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: #7C8790;">Time slot</span>
+                    <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #7C8790;">Swipe →</span>
                   </div>
                   <div class="rail" style="display: flex; gap: 8px; overflow-x: auto; padding: 0 20px 4px;">
                     <sc-for list="{{ f.slots }}" as="s" hint-placeholder-count="8">
-                      <button onClick="{{ s.onTap }}" style="flex: 0 0 auto; width: 84px; height: 84px; border: 2px solid #24382E; font-family: Archivo, sans-serif; display: flex; flex-direction: column; align-items: flex-start; justify-content: space-between; padding: 10px; cursor: pointer; {{ s.style }}">
+                      <button onClick="{{ s.onTap }}" style="flex: 0 0 auto; width: 84px; height: 84px; border: 2px solid #D9DEE3; font-family: Archivo, sans-serif; display: flex; flex-direction: column; align-items: flex-start; justify-content: space-between; padding: 10px; cursor: pointer; {{ s.style }}">
                         <span style="font-family: 'JetBrains Mono', monospace; font-size: 18px; font-weight: 700; text-align: left;">{{ s.hour }}</span>
                         <span style="font-size: 10px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase;">{{ s.state }}</span>
                       </button>
@@ -222,29 +223,29 @@
                   </div>
                 </div>
 
-                <div style="padding: 18px 20px; display: flex; flex-direction: column; gap: 14px; border-bottom: 2px solid #24382E;">
+                <div style="padding: 18px 20px; display: flex; flex-direction: column; gap: 14px; border-bottom: 2px solid #D9DEE3;">
                   <div style="display: flex; flex-direction: column; gap: 7px;">
-                    <span style="font-size: 11px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: #62786C;">Name</span>
-                    <input value="{{ f.bookName }}" onChange="{{ f.onBookName }}" placeholder="Your name" style="min-height: 48px; background: #111C17; border: 2px solid #24382E; color: #F1F5F2; font-family: Archivo, sans-serif; font-size: 16px; font-weight: 600; padding: 0 14px; outline: none;">
+                    <span style="font-size: 11px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: #7C8790;">Name</span>
+                    <input value="{{ f.bookName }}" onChange="{{ f.onBookName }}" placeholder="Your name" style="min-height: 48px; background: #F5F7F9; border: 2px solid #D9DEE3; color: #15181B; font-family: Archivo, sans-serif; font-size: 16px; font-weight: 600; padding: 0 14px; outline: none;">
                   </div>
                   <div style="display: flex; flex-direction: column; gap: 7px;">
-                    <span style="font-size: 11px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: #62786C;">Phone</span>
-                    <input value="{{ f.bookPhone }}" onChange="{{ f.onBookPhone }}" placeholder="10-digit number" style="min-height: 48px; background: #111C17; border: 2px solid #24382E; color: #F1F5F2; font-family: 'JetBrains Mono', monospace; font-size: 16px; font-weight: 700; padding: 0 14px; outline: none;">
+                    <span style="font-size: 11px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: #7C8790;">Phone</span>
+                    <input value="{{ f.bookPhone }}" onChange="{{ f.onBookPhone }}" placeholder="10-digit number" style="min-height: 48px; background: #F5F7F9; border: 2px solid #D9DEE3; color: #15181B; font-family: 'JetBrains Mono', monospace; font-size: 16px; font-weight: 700; padding: 0 14px; outline: none;">
                   </div>
-                  <button onClick="{{ f.onConfirm }}" style="min-height: 52px; border: 0; background: #E3A93B; color: #0B120F; font-family: Archivo, sans-serif; font-size: 13px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; text-align: left; padding: 0 16px; cursor: pointer;">Confirm booking · {{ f.bookSummary }}</button>
+                  <button onClick="{{ f.onConfirm }}" style="min-height: 52px; border: 0; background: #E7EEFB; color: #1558D6; font-family: Archivo, sans-serif; font-size: 13px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; text-align: left; padding: 0 16px; cursor: pointer;">Confirm booking · {{ f.bookSummary }}</button>
                 </div>
 
                 <div style="padding: 22px 20px 8px;">
-                  <span style="font-size: 13px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: #F1F5F2;">Upcoming bookings</span>
+                  <span style="font-size: 13px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: #15181B;">Upcoming bookings</span>
                 </div>
                 <sc-for list="{{ f.upcoming }}" as="b" hint-placeholder-count="3">
-                  <div style="display: flex; align-items: center; gap: 12px; padding: 13px 20px; border-top: 2px solid #24382E;">
+                  <div style="display: flex; align-items: center; gap: 12px; padding: 13px 20px; border-top: 2px solid #D9DEE3;">
                     <div style="flex: 1; display: flex; flex-direction: column; gap: 3px;">
-                      <span style="font-size: 15px; font-weight: 600; color: #F1F5F2;">{{ b.name }}</span>
-                      <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #62786C;">{{ b.meta }}</span>
+                      <span style="font-size: 15px; font-weight: 600; color: #15181B;">{{ b.name }}</span>
+                      <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #7C8790;">{{ b.meta }}</span>
                     </div>
                     <sc-if value="{{ f.staff }}" hint-placeholder-val="{{ false }}">
-                      <button onClick="{{ b.onCancel }}" style="min-height: 44px; border: 2px solid #EC3013; background: transparent; color: #EC3013; font-family: Archivo, sans-serif; font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; padding: 0 12px; cursor: pointer;">Cancel</button>
+                      <button onClick="{{ b.onCancel }}" style="min-height: 44px; border: 2px solid #D7301F; background: transparent; color: #D7301F; font-family: Archivo, sans-serif; font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; padding: 0 12px; cursor: pointer;">Cancel</button>
                     </sc-if>
                   </div>
                 </sc-for>
@@ -254,28 +255,28 @@
 
             <sc-if value="{{ f.isMembers }}" hint-placeholder-val="{{ false }}">
               <div style="display: flex; flex-direction: column;">
-                <div style="padding: 16px 20px; border-bottom: 2px solid #24382E; background: #17251E; display: flex; align-items: center; gap: 12px;">
-                  <span style="font-family: 'JetBrains Mono', monospace; font-size: 15px; font-weight: 700; color: #E3A93B;">10 pts</span>
-                  <span style="font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #93A89C;">per ₹100 played</span>
+                <div style="padding: 16px 20px; border-bottom: 2px solid #D9DEE3; background: #EDF1F4; display: flex; align-items: center; gap: 12px;">
+                  <span style="font-family: 'JetBrains Mono', monospace; font-size: 15px; font-weight: 700; color: #1558D6;">10 pts</span>
+                  <span style="font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #4E5A64;">per ₹100 played</span>
                 </div>
                 <sc-for list="{{ f.members }}" as="m" hint-placeholder-count="5">
-                  <div style="padding: 16px 20px; border-bottom: 2px solid #24382E; display: flex; gap: 14px; align-items: stretch;">
-                    <div style="width: 3px; background: #E3A93B; flex: 0 0 auto;"></div>
+                  <div style="padding: 16px 20px; border-bottom: 2px solid #D9DEE3; display: flex; gap: 14px; align-items: stretch;">
+                    <div style="width: 3px; background: #1558D6; flex: 0 0 auto;"></div>
                     <div style="flex: 1; display: flex; flex-direction: column; gap: 8px;">
                       <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px;">
-                        <span style="font-size: 17px; font-weight: 700; color: #F1F5F2;">{{ m.name }}</span>
+                        <span style="font-size: 17px; font-weight: 700; color: #15181B;">{{ m.name }}</span>
                         <span style="font-size: 10px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; padding: 4px 7px; {{ m.planStyle }}">{{ m.plan }}</span>
                       </div>
                       <div style="display: flex; align-items: flex-end; justify-content: space-between;">
                         <div style="display: flex; flex-direction: column; gap: 3px;">
-                          <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #62786C;">{{ m.meta }}</span>
+                          <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #7C8790;">{{ m.meta }}</span>
                           <sc-if value="{{ f.staff }}" hint-placeholder-val="{{ false }}">
-                            <span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #93A89C;">{{ m.phone }}</span>
+                            <span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #4E5A64;">{{ m.phone }}</span>
                           </sc-if>
                         </div>
                         <div style="display: flex; flex-direction: column; align-items: flex-end;">
-                          <span style="font-family: 'JetBrains Mono', monospace; font-size: 26px; font-weight: 700; color: #E3A93B; line-height: 1;">{{ m.points }}</span>
-                          <span style="font-size: 10px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #62786C;">Points</span>
+                          <span style="font-family: 'JetBrains Mono', monospace; font-size: 26px; font-weight: 700; color: #1558D6; line-height: 1;">{{ m.points }}</span>
+                          <span style="font-size: 10px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #7C8790;">Points</span>
                         </div>
                       </div>
                     </div>
@@ -288,19 +289,19 @@
             <sc-if value="{{ f.isTourney }}" hint-placeholder-val="{{ false }}">
               <div style="display: flex; flex-direction: column;">
                 <sc-for list="{{ f.tournaments }}" as="t" hint-placeholder-count="2">
-                  <div style="border-bottom: 2px solid #24382E; display: flex; flex-direction: column;">
+                  <div style="border-bottom: 2px solid #D9DEE3; display: flex; flex-direction: column;">
                     <div style="padding: 16px 20px; display: flex; flex-direction: column; gap: 8px;">
                       <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 10px;">
-                        <span style="font-size: 20px; font-weight: 800; color: #F1F5F2; letter-spacing: -0.01em;">{{ t.name }}</span>
+                        <span style="font-size: 20px; font-weight: 800; color: #15181B; letter-spacing: -0.01em;">{{ t.name }}</span>
                         <span style="font-size: 10px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; padding: 5px 8px; white-space: nowrap; {{ t.badgeStyle }}">{{ t.status }}</span>
                       </div>
-                      <div style="display: flex; gap: 16px; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #62786C;">
+                      <div style="display: flex; gap: 16px; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #7C8790;">
                         <span>{{ t.date }}</span><span>{{ t.playerCount }}</span><span>{{ t.fee }}</span>
                       </div>
                     </div>
 
                     <sc-if value="{{ t.champion }}" hint-placeholder-val="{{ false }}">
-                      <div style="background: #E3A93B; color: #0B120F; padding: 16px 20px; display: flex; flex-direction: column; gap: 3px;">
+                      <div style="background: #1558D6; color: #FFFFFF; padding: 16px 20px; display: flex; flex-direction: column; gap: 3px;">
                         <span style="font-size: 11px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase;">Champion</span>
                         <span style="font-size: 24px; font-weight: 800; letter-spacing: -0.01em;">{{ t.champion }}</span>
                       </div>
@@ -310,23 +311,23 @@
                       <div style="padding: 0 20px 16px; display: flex; flex-direction: column; gap: 10px;">
                         <div style="display: flex; flex-wrap: wrap; gap: 8px;">
                           <sc-for list="{{ t.players }}" as="p" hint-placeholder-count="6">
-                            <span style="border: 2px solid #24382E; color: #93A89C; font-size: 12px; font-weight: 700; padding: 7px 10px;">{{ p.name }}</span>
+                            <span style="border: 2px solid #D9DEE3; color: #4E5A64; font-size: 12px; font-weight: 700; padding: 7px 10px;">{{ p.name }}</span>
                           </sc-for>
                         </div>
                         <div style="display: flex; gap: 10px;">
-                          <input value="{{ t.newPlayer }}" onChange="{{ t.onNewPlayer }}" placeholder="Add player" style="flex: 1; min-height: 44px; background: #111C17; border: 2px solid #24382E; color: #F1F5F2; font-family: Archivo, sans-serif; font-size: 15px; font-weight: 600; padding: 0 12px; outline: none;">
-                          <button onClick="{{ t.onAddPlayer }}" style="min-height: 44px; border: 2px solid #24382E; background: transparent; color: #93A89C; font-family: Archivo, sans-serif; font-size: 12px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; padding: 0 14px; cursor: pointer;">Add</button>
+                          <input value="{{ t.newPlayer }}" onChange="{{ t.onNewPlayer }}" placeholder="Add player" style="flex: 1; min-height: 44px; background: #F5F7F9; border: 2px solid #D9DEE3; color: #15181B; font-family: Archivo, sans-serif; font-size: 15px; font-weight: 600; padding: 0 12px; outline: none;">
+                          <button onClick="{{ t.onAddPlayer }}" style="min-height: 44px; border: 2px solid #D9DEE3; background: transparent; color: #4E5A64; font-family: Archivo, sans-serif; font-size: 12px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; padding: 0 14px; cursor: pointer;">Add</button>
                         </div>
                         <sc-if value="{{ f.staff }}" hint-placeholder-val="{{ false }}">
-                          <button onClick="{{ t.onStartBracket }}" style="min-height: 48px; border: 0; background: #E3A93B; color: #0B120F; font-family: Archivo, sans-serif; font-size: 13px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; text-align: left; padding: 0 16px; cursor: pointer;">Start bracket</button>
+                          <button onClick="{{ t.onStartBracket }}" style="min-height: 48px; border: 0; background: #E7EEFB; color: #1558D6; font-family: Archivo, sans-serif; font-size: 13px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; text-align: left; padding: 0 16px; cursor: pointer;">Start bracket</button>
                         </sc-if>
                       </div>
                     </sc-if>
 
                     <sc-if value="{{ t.isRunning }}" hint-placeholder-val="{{ false }}">
                       <div style="padding: 0 20px 8px; display: flex; border: 0;">
-                        <div style="display: flex; border: 2px solid #24382E; width: 100%;">
-                          <button onClick="{{ t.onViewRounds }}" style="flex: 1; min-height: 40px; border: 0; border-right: 2px solid #24382E; font-family: Archivo, sans-serif; font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; {{ t.roundsBtnStyle }}">Rounds</button>
+                        <div style="display: flex; border: 2px solid #D9DEE3; width: 100%;">
+                          <button onClick="{{ t.onViewRounds }}" style="flex: 1; min-height: 40px; border: 0; border-right: 2px solid #D9DEE3; font-family: Archivo, sans-serif; font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; {{ t.roundsBtnStyle }}">Rounds</button>
                           <button onClick="{{ t.onViewBracket }}" style="flex: 1; min-height: 40px; border: 0; font-family: Archivo, sans-serif; font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; {{ t.bracketBtnStyle }}">Bracket</button>
                         </div>
                       </div>
@@ -335,10 +336,10 @@
                         <div style="padding: 12px 20px 18px; display: flex; flex-direction: column; gap: 16px;">
                           <sc-for list="{{ t.rounds }}" as="r" hint-placeholder-count="2">
                             <div style="display: flex; flex-direction: column; gap: 8px;">
-                              <span style="font-size: 11px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: #62786C; border-bottom: 2px solid #24382E; padding-bottom: 6px;">{{ r.label }}</span>
+                              <span style="font-size: 11px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: #7C8790; border-bottom: 2px solid #D9DEE3; padding-bottom: 6px;">{{ r.label }}</span>
                               <sc-for list="{{ r.matches }}" as="m" hint-placeholder-count="2">
-                                <div style="display: flex; flex-direction: column; border: 2px solid #24382E;">
-                                  <button onClick="{{ m.onPick1 }}" style="min-height: 46px; border: 0; border-bottom: 2px solid #24382E; font-family: Archivo, sans-serif; font-size: 15px; font-weight: 700; text-align: left; padding: 0 12px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; {{ m.p1Style }}">
+                                <div style="display: flex; flex-direction: column; border: 2px solid #D9DEE3;">
+                                  <button onClick="{{ m.onPick1 }}" style="min-height: 46px; border: 0; border-bottom: 2px solid #D9DEE3; font-family: Archivo, sans-serif; font-size: 15px; font-weight: 700; text-align: left; padding: 0 12px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; {{ m.p1Style }}">
                                     <span>{{ m.p1 }}</span><span style="font-size: 11px; letter-spacing: 0.1em;">{{ m.p1Mark }}</span>
                                   </button>
                                   <button onClick="{{ m.onPick2 }}" style="min-height: 46px; border: 0; font-family: Archivo, sans-serif; font-size: 15px; font-weight: 700; text-align: left; padding: 0 12px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; {{ m.p2Style }}">
@@ -356,11 +357,11 @@
                           <div style="display: flex; gap: 14px; align-items: stretch;">
                             <sc-for list="{{ t.rounds }}" as="r" hint-placeholder-count="3">
                               <div style="flex: 0 0 auto; width: 168px; display: flex; flex-direction: column; gap: 8px;">
-                                <span style="font-size: 10px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #62786C; border-bottom: 2px solid #24382E; padding-bottom: 5px;">{{ r.label }}</span>
+                                <span style="font-size: 10px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #7C8790; border-bottom: 2px solid #D9DEE3; padding-bottom: 5px;">{{ r.label }}</span>
                                 <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-around; gap: 10px;">
                                   <sc-for list="{{ r.matches }}" as="m" hint-placeholder-count="2">
-                                    <div style="border: 2px solid #24382E; display: flex; flex-direction: column;">
-                                      <div style="min-height: 34px; display: flex; align-items: center; padding: 0 9px; border-bottom: 2px solid #24382E; font-size: 13px; font-weight: 700; {{ m.p1Style }}">{{ m.p1 }}</div>
+                                    <div style="border: 2px solid #D9DEE3; display: flex; flex-direction: column;">
+                                      <div style="min-height: 34px; display: flex; align-items: center; padding: 0 9px; border-bottom: 2px solid #D9DEE3; font-size: 13px; font-weight: 700; {{ m.p1Style }}">{{ m.p1 }}</div>
                                       <div style="min-height: 34px; display: flex; align-items: center; padding: 0 9px; font-size: 13px; font-weight: 700; {{ m.p2Style }}">{{ m.p2 }}</div>
                                     </div>
                                   </sc-for>
@@ -378,7 +379,7 @@
             </sc-if>
           </div>
 
-          <div style="position: absolute; left: 0; right: 0; bottom: 0; height: 84px; border-top: 2px solid #24382E; background: #0B120F; display: grid; grid-template-columns: repeat(5, 1fr);">
+          <div style="position: absolute; left: 0; right: 0; bottom: 0; height: 84px; border-top: 2px solid #D9DEE3; background: #FFFFFF; display: grid; grid-template-columns: repeat(5, 1fr);">
             <sc-for list="{{ f.tabs }}" as="tb" hint-placeholder-count="5">
               <button onClick="{{ tb.onTap }}" style="border: 0; background: transparent; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 5px; padding: 12px 0 0; min-height: 56px; {{ tb.style }}">
                 <span style="display: block; width: 24px; height: 3px; {{ tb.markStyle }}"></span>
@@ -392,48 +393,48 @@
           </div>
 
           <sc-if value="{{ f.sheet }}" hint-placeholder-val="{{ false }}">
-            <div onClick="{{ f.onCloseSheet }}" style="position: absolute; inset: 0; background: rgba(4, 9, 7, 0.72);"></div>
-            <div style="position: absolute; left: 0; right: 0; bottom: 0; background: #111C17; border-top: 5px solid #E3A93B;">
-              <div style="display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-bottom: 2px solid #24382E;">
-                <span style="font-size: 15px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #F1F5F2;">{{ f.sheetTitle }}</span>
-                <button onClick="{{ f.onCloseSheet }}" style="border: 2px solid #24382E; background: transparent; color: #93A89C; font-family: Archivo, sans-serif; font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; padding: 8px 10px; cursor: pointer; min-height: 36px;">Close</button>
+            <div onClick="{{ f.onCloseSheet }}" style="position: absolute; inset: 0; background: rgba(9, 14, 20, 0.45);"></div>
+            <div style="position: absolute; left: 0; right: 0; bottom: 0; background: #F5F7F9; border-top: 5px solid #1558D6;">
+              <div style="display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-bottom: 2px solid #D9DEE3;">
+                <span style="font-size: 15px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #15181B;">{{ f.sheetTitle }}</span>
+                <button onClick="{{ f.onCloseSheet }}" style="border: 2px solid #D9DEE3; background: transparent; color: #4E5A64; font-family: Archivo, sans-serif; font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; padding: 8px 10px; cursor: pointer; min-height: 36px;">Close</button>
               </div>
 
               <sc-if value="{{ f.sheetStart }}" hint-placeholder-val="{{ false }}">
                 <div style="padding: 18px 20px 26px; display: flex; flex-direction: column; gap: 16px;">
                   <div style="display: flex; flex-direction: column; gap: 7px;">
-                    <span style="font-size: 11px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: #62786C;">Customer</span>
-                    <input value="{{ f.startName }}" onChange="{{ f.onStartName }}" placeholder="Walk-in" style="min-height: 48px; background: #0B120F; border: 2px solid #24382E; color: #F1F5F2; font-family: Archivo, sans-serif; font-size: 16px; font-weight: 600; padding: 0 14px; outline: none;">
+                    <span style="font-size: 11px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: #7C8790;">Customer</span>
+                    <input value="{{ f.startName }}" onChange="{{ f.onStartName }}" placeholder="Walk-in" style="min-height: 48px; background: #FFFFFF; border: 2px solid #D9DEE3; color: #15181B; font-family: Archivo, sans-serif; font-size: 16px; font-weight: 600; padding: 0 14px; outline: none;">
                   </div>
                   <div style="display: flex; flex-direction: column; gap: 8px;">
-                    <span style="font-size: 11px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: #62786C;">Members</span>
+                    <span style="font-size: 11px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: #7C8790;">Members</span>
                     <div style="display: flex; flex-wrap: wrap; gap: 8px;">
                       <sc-for list="{{ f.memberChips }}" as="c" hint-placeholder-count="5">
-                        <button onClick="{{ c.onTap }}" style="min-height: 44px; border: 2px solid #24382E; font-family: Archivo, sans-serif; font-size: 13px; font-weight: 700; padding: 0 12px; cursor: pointer; {{ c.style }}">{{ c.name }}</button>
+                        <button onClick="{{ c.onTap }}" style="min-height: 44px; border: 2px solid #D9DEE3; font-family: Archivo, sans-serif; font-size: 13px; font-weight: 700; padding: 0 12px; cursor: pointer; {{ c.style }}">{{ c.name }}</button>
                       </sc-for>
                     </div>
                   </div>
-                  <div style="display: flex; justify-content: space-between; border-top: 2px solid #24382E; padding-top: 14px;">
-                    <span style="font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #62786C;">{{ f.startTableName }}</span>
-                    <span style="font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 700; color: #E3A93B;">{{ f.startTableRate }}</span>
+                  <div style="display: flex; justify-content: space-between; border-top: 2px solid #D9DEE3; padding-top: 14px;">
+                    <span style="font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #7C8790;">{{ f.startTableName }}</span>
+                    <span style="font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 700; color: #1558D6;">{{ f.startTableRate }}</span>
                   </div>
-                  <button onClick="{{ f.onConfirmStart }}" style="min-height: 52px; border: 0; background: #E3A93B; color: #0B120F; font-family: Archivo, sans-serif; font-size: 13px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; text-align: left; padding: 0 16px; cursor: pointer;">Start session</button>
+                  <button onClick="{{ f.onConfirmStart }}" style="min-height: 52px; border: 0; background: #E7EEFB; color: #1558D6; font-family: Archivo, sans-serif; font-size: 13px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; text-align: left; padding: 0 16px; cursor: pointer;">Start session</button>
                 </div>
               </sc-if>
 
               <sc-if value="{{ f.sheetBill }}" hint-placeholder-val="{{ false }}">
                 <div style="padding: 18px 20px 26px; display: flex; flex-direction: column; gap: 0;">
                   <sc-for list="{{ f.billRows }}" as="r" hint-placeholder-count="4">
-                    <div style="display: flex; align-items: center; justify-content: space-between; padding: 13px 0; border-bottom: 2px solid #24382E;">
-                      <span style="font-size: 11px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #62786C;">{{ r.label }}</span>
-                      <span style="font-family: 'JetBrains Mono', monospace; font-size: 16px; font-weight: 700; color: #F1F5F2;">{{ r.value }}</span>
+                    <div style="display: flex; align-items: center; justify-content: space-between; padding: 13px 0; border-bottom: 2px solid #D9DEE3;">
+                      <span style="font-size: 11px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #7C8790;">{{ r.label }}</span>
+                      <span style="font-family: 'JetBrains Mono', monospace; font-size: 16px; font-weight: 700; color: #15181B;">{{ r.value }}</span>
                     </div>
                   </sc-for>
                   <div style="display: flex; align-items: flex-end; justify-content: space-between; padding: 20px 0 22px;">
-                    <span style="font-size: 12px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: #F1F5F2;">Total</span>
-                    <span style="font-family: 'JetBrains Mono', monospace; font-size: 44px; font-weight: 700; color: #E3A93B; line-height: 1;">{{ f.billTotal }}</span>
+                    <span style="font-size: 12px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: #15181B;">Total</span>
+                    <span style="font-family: 'JetBrains Mono', monospace; font-size: 44px; font-weight: 700; color: #1558D6; line-height: 1;">{{ f.billTotal }}</span>
                   </div>
-                  <button onClick="{{ f.onCloseSheet }}" style="min-height: 52px; border: 0; background: #E3A93B; color: #0B120F; font-family: Archivo, sans-serif; font-size: 13px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; text-align: left; padding: 0 16px; cursor: pointer;">Mark paid</button>
+                  <button onClick="{{ f.onCloseSheet }}" style="min-height: 52px; border: 0; background: #E7EEFB; color: #1558D6; font-family: Archivo, sans-serif; font-size: 13px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; text-align: left; padding: 0 16px; cursor: pointer;">Mark paid</button>
                 </div>
               </sc-if>
 
@@ -441,25 +442,25 @@
                 <div style="padding: 18px 20px 26px; display: flex; flex-direction: column; gap: 16px;">
                   <div style="display: flex; gap: 10px;">
                     <sc-for list="{{ f.pinDots }}" as="d" hint-placeholder-count="4">
-                      <span style="flex: 1; height: 56px; border: 2px solid #24382E; display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 24px; font-weight: 700; {{ d.style }}">{{ d.char }}</span>
+                      <span style="flex: 1; height: 56px; border: 2px solid #D9DEE3; display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 24px; font-weight: 700; {{ d.style }}">{{ d.char }}</span>
                     </sc-for>
                   </div>
                   <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;">
                     <sc-for list="{{ f.keys }}" as="k" hint-placeholder-count="12">
-                      <button onClick="{{ k.onTap }}" style="min-height: 56px; border: 2px solid #24382E; background: transparent; color: #F1F5F2; font-family: 'JetBrains Mono', monospace; font-size: 22px; font-weight: 700; cursor: pointer;">{{ k.label }}</button>
+                      <button onClick="{{ k.onTap }}" style="min-height: 56px; border: 2px solid #D9DEE3; background: transparent; color: #15181B; font-family: 'JetBrains Mono', monospace; font-size: 22px; font-weight: 700; cursor: pointer;">{{ k.label }}</button>
                     </sc-for>
                   </div>
-                  <span style="font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #62786C;">{{ f.pinHint }}</span>
+                  <span style="font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #7C8790;">{{ f.pinHint }}</span>
                 </div>
               </sc-if>
 
               <sc-if value="{{ f.sheetRate }}" hint-placeholder-val="{{ false }}">
                 <div style="padding: 18px 20px 26px; display: flex; flex-direction: column; gap: 16px;">
                   <div style="display: flex; flex-direction: column; gap: 7px;">
-                    <span style="font-size: 11px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: #62786C;">Hourly rate (₹)</span>
-                    <input value="{{ f.rateValue }}" onChange="{{ f.onRateValue }}" style="min-height: 48px; background: #0B120F; border: 2px solid #24382E; color: #F1F5F2; font-family: 'JetBrains Mono', monospace; font-size: 20px; font-weight: 700; padding: 0 14px; outline: none;">
+                    <span style="font-size: 11px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: #7C8790;">Hourly rate (₹)</span>
+                    <input value="{{ f.rateValue }}" onChange="{{ f.onRateValue }}" style="min-height: 48px; background: #FFFFFF; border: 2px solid #D9DEE3; color: #15181B; font-family: 'JetBrains Mono', monospace; font-size: 20px; font-weight: 700; padding: 0 14px; outline: none;">
                   </div>
-                  <button onClick="{{ f.onSaveRate }}" style="min-height: 52px; border: 0; background: #E3A93B; color: #0B120F; font-family: Archivo, sans-serif; font-size: 13px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; text-align: left; padding: 0 16px; cursor: pointer;">Save rate</button>
+                  <button onClick="{{ f.onSaveRate }}" style="min-height: 52px; border: 0; background: #E7EEFB; color: #1558D6; font-family: Archivo, sans-serif; font-size: 13px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; text-align: left; padding: 0 16px; cursor: pointer;">Save rate</button>
                 </div>
               </sc-if>
 
@@ -467,19 +468,19 @@
                 <div style="padding: 18px 20px 26px; display: flex; flex-direction: column; gap: 16px;">
                   <sc-for list="{{ f.formFields }}" as="fd" hint-placeholder-count="2">
                     <div style="display: flex; flex-direction: column; gap: 7px;">
-                      <span style="font-size: 11px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: #62786C;">{{ fd.label }}</span>
-                      <input value="{{ fd.value }}" onChange="{{ fd.onChange }}" placeholder="{{ fd.placeholder }}" style="min-height: 48px; background: #0B120F; border: 2px solid #24382E; color: #F1F5F2; font-size: 16px; font-weight: 600; padding: 0 14px; outline: none; {{ fd.style }}">
+                      <span style="font-size: 11px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: #7C8790;">{{ fd.label }}</span>
+                      <input value="{{ fd.value }}" onChange="{{ fd.onChange }}" placeholder="{{ fd.placeholder }}" style="min-height: 48px; background: #FFFFFF; border: 2px solid #D9DEE3; color: #15181B; font-size: 16px; font-weight: 600; padding: 0 14px; outline: none; {{ fd.style }}">
                     </div>
                   </sc-for>
                   <div style="display: flex; flex-direction: column; gap: 8px;">
-                    <span style="font-size: 11px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: #62786C;">{{ f.formSegLabel }}</span>
-                    <div style="display: flex; border: 2px solid #24382E;">
+                    <span style="font-size: 11px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: #7C8790;">{{ f.formSegLabel }}</span>
+                    <div style="display: flex; border: 2px solid #D9DEE3;">
                       <sc-for list="{{ f.formSegOptions }}" as="op" hint-placeholder-count="2">
-                        <button onClick="{{ op.onTap }}" style="flex: 1; min-height: 44px; border: 0; border-right: 2px solid #24382E; font-family: Archivo, sans-serif; font-size: 12px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; {{ op.style }}">{{ op.label }}</button>
+                        <button onClick="{{ op.onTap }}" style="flex: 1; min-height: 44px; border: 0; border-right: 2px solid #D9DEE3; font-family: Archivo, sans-serif; font-size: 12px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; {{ op.style }}">{{ op.label }}</button>
                       </sc-for>
                     </div>
                   </div>
-                  <button onClick="{{ f.onCloseSheet }}" style="min-height: 52px; border: 0; background: #E3A93B; color: #0B120F; font-family: Archivo, sans-serif; font-size: 13px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; text-align: left; padding: 0 16px; cursor: pointer;">{{ f.formCta }}</button>
+                  <button onClick="{{ f.onCloseSheet }}" style="min-height: 52px; border: 0; background: #E7EEFB; color: #1558D6; font-family: Archivo, sans-serif; font-size: 13px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; text-align: left; padding: 0 16px; cursor: pointer;">{{ f.formCta }}</button>
                 </div>
               </sc-if>
 
@@ -489,8 +490,8 @@
                     <span style="font-size: 11px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase;">Confirmed</span>
                     <span style="font-size: 22px; font-weight: 800; letter-spacing: -0.01em;">{{ f.successLine }}</span>
                   </div>
-                  <span style="font-size: 14px; color: #93A89C; line-height: 1.45;">{{ f.successNote }}</span>
-                  <button onClick="{{ f.onCloseSheet }}" style="min-height: 52px; border: 0; background: #E3A93B; color: #0B120F; font-family: Archivo, sans-serif; font-size: 13px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; text-align: left; padding: 0 16px; cursor: pointer;">Done</button>
+                  <span style="font-size: 14px; color: #4E5A64; line-height: 1.45;">{{ f.successNote }}</span>
+                  <button onClick="{{ f.onCloseSheet }}" style="min-height: 52px; border: 0; background: #E7EEFB; color: #1558D6; font-family: Archivo, sans-serif; font-size: 13px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; text-align: left; padding: 0 16px; cursor: pointer;">Done</button>
                 </div>
               </sc-if>
             </div>
@@ -564,7 +565,7 @@
 
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1400,&quot;height&quot;:1200}}">
-const BRASS = '#E3A93B', LIVE = '#EC3013', INK = '#F1F5F2', DIM = '#93A89C', FAINT = '#62786C', RULE = '#24382E', FELT = '#1E7A4C', GROUND = '#0B120F';
+const BRASS = '#1558D6', LIVE = '#D7301F', INK = '#15181B', DIM = '#4E5A64', FAINT = '#7C8790', RULE = '#D9DEE3', FELT = '#1E7A4C', GROUND = '#FFFFFF';
 
 const money = (n) => '\u20B9' + Math.round(n).toLocaleString('en-IN');
 const dur = (ms) => { const t = Math.max(0, Math.floor(ms / 60000)); const h = Math.floor(t / 60), m = t % 60; return h > 0 ? h + 'h ' + m + 'm' : m + 'm'; };
@@ -676,6 +677,7 @@ class Component extends DCLogic {
       isMembers: f.screen === 'members', isTourney: f.screen === 'tourney',
       staffBtnLabel: f.staff ? 'Staff on' : 'Staff',
       staffBtnStyle: f.staff ? 'color:' + BRASS : 'color:' + DIM,
+      staffBorder: f.staff ? BRASS : RULE,
       onStaffToggle: () => (f.staff ? this.patch(i, { staff: false }) : this.patch(i, { sheet: 'pin', pin: '' })),
       onCloseSheet: () => this.patch(i, { sheet: null }),
       sheet: f.sheet,
@@ -778,7 +780,7 @@ class Component extends DCLogic {
       o.slots.push({
         hour: fmtHour(h).replace(' ', ''),
         state: taken ? 'Taken' : (sel ? 'Selected' : 'Free'),
-        style: taken ? 'background:#111C17;color:#3E5247;border-color:#1A2721;cursor:not-allowed'
+        style: taken ? 'background:#F5F7F9;color:#AEB7BE;border-color:#E9EDF0;cursor:not-allowed'
           : (sel ? 'background:' + BRASS + ';color:' + GROUND + ';border-color:' + BRASS : 'background:transparent;color:' + DIM),
         onTap: () => { if (!taken) this.patch(i, { hour: h }); }
       });
@@ -818,7 +820,7 @@ class Component extends DCLogic {
             return {
               p1: m.p1, p2: m.p2 || 'Bye',
               p1Mark: won(m.p1) ? 'Won' : '', p2Mark: m.p2 && won(m.p2) ? 'Won' : (m.p2 ? '' : 'Auto'),
-              p1Style: st(m.p1), p2Style: m.p2 ? st(m.p2) : 'background:transparent;color:#3E5247',
+              p1Style: st(m.p1), p2Style: m.p2 ? st(m.p2) : 'background:transparent;color:#AEB7BE',
               onPick1: () => { if (f.staff && !m.winner) this.recordWinner(t.id, m.id, m.p1); },
               onPick2: () => { if (f.staff && !m.winner && m.p2) this.recordWinner(t.id, m.id, m.p2); }
             };
@@ -902,18 +904,18 @@ class Component extends DCLogic {
     return {
       frames: this.state.frames.map((f, i) => this.buildFrame(f, i)),
       colorTokens: [
-        { name: 'ground', hex: '#0B120F', swatch: 'background:#0B120F', use: 'App background, tab bar' },
-        { name: 'surface', hex: '#111C17', swatch: 'background:#111C17', use: 'Sheets, inputs' },
-        { name: 'surface-2', hex: '#17251E', swatch: 'background:#17251E', use: 'In-play table, loyalty banner' },
-        { name: 'rule', hex: '#24382E', swatch: 'background:#24382E', use: '2pt dividers, control borders' },
-        { name: 'ink', hex: '#F1F5F2', swatch: 'background:#F1F5F2', use: 'Primary text' },
-        { name: 'ink-dim', hex: '#93A89C', swatch: 'background:#93A89C', use: 'Secondary text, inactive labels' },
-        { name: 'ink-faint', hex: '#62786C', swatch: 'background:#62786C', use: 'Eyebrow labels, meta' },
-        { name: 'ink-mute', hex: '#3E5247', swatch: 'background:#3E5247', use: 'Disabled slot text' },
-        { name: 'brass', hex: '#E3A93B', swatch: 'background:#E3A93B', use: 'Single accent: primary buttons, money, points, selection' },
-        { name: 'live', hex: '#EC3013', swatch: 'background:#EC3013', use: 'IN PLAY only, plus destructive actions' },
+        { name: 'ground', hex: '#FFFFFF', swatch: 'background:#FFFFFF', use: 'App background, tab bar' },
+        { name: 'surface', hex: '#F5F7F9', swatch: 'background:#F5F7F9', use: 'Sheets, inputs' },
+        { name: 'surface-2', hex: '#EDF1F4', swatch: 'background:#EDF1F4', use: 'In-play table, loyalty banner' },
+        { name: 'rule', hex: '#D9DEE3', swatch: 'background:#D9DEE3', use: '2pt dividers, control borders' },
+        { name: 'ink', hex: '#15181B', swatch: 'background:#15181B', use: 'Primary text' },
+        { name: 'ink-dim', hex: '#4E5A64', swatch: 'background:#4E5A64', use: 'Secondary text, inactive labels' },
+        { name: 'ink-faint', hex: '#7C8790', swatch: 'background:#7C8790', use: 'Eyebrow labels, meta' },
+        { name: 'ink-mute', hex: '#AEB7BE', swatch: 'background:#AEB7BE', use: 'Disabled slot text' },
+        { name: 'brass', hex: '#1558D6', swatch: 'background:#1558D6', use: 'Single accent: primary buttons, money, points, selection' },
+        { name: 'live', hex: '#D7301F', swatch: 'background:#D7301F', use: 'IN PLAY only, plus destructive actions' },
         { name: 'felt', hex: '#1E7A4C', swatch: 'background:#1E7A4C', use: 'FREE outline, booking-confirmed banner' },
-        { name: 'felt-text', hex: '#4FBF87', swatch: 'background:#4FBF87', use: 'FREE label text on ground' }
+        { name: 'felt-text', hex: '#177347', swatch: 'background:#177347', use: 'FREE label text on ground' }
       ],
       typeTokens: [
         { name: 'display', spec: 'Archivo 800 · 34/34 · -1%', use: 'Bill total, champion' },
